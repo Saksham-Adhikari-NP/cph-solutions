@@ -24,3 +24,4 @@ def solve():
 
         result = ['0'] * n
       
+// oke 
