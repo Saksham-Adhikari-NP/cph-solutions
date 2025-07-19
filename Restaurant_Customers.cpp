@@ -7,6 +7,7 @@ bool cmp(pair<int,int>a, pair<int,int>b)
 int main() {
 
     int n;
+    cin >> n;
     vector<pair<int,int>>customer ;
     for(int i=0;i<n;i++){
         int a,b;
