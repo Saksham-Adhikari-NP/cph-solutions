@@ -26,7 +26,7 @@ vector<int> count(n,1);
             }
         }
     }
-max = *max_element(count.begin(), count.end());
+int max = *max_element(count.begin(), count.end());
     cout << max ;
     
     return 0;
