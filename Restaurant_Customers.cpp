@@ -1,34 +1,34 @@
-#include<bits/stdc++.h>
-using namespace std; 
-bool cmp(pair<int,int>a, pair<int,int>b)
-{
-    return a.second<b.second;
-}
-int main() {
+#include <bits/stdc++.h>
+using namespace std;
 
+int main() {
     int n;
     cin >> n;
-    vector<pair<int,int>>customer ;
-    for(int i=0;i<n;i++){
-        int a,b;
-        cin>>a>>b;
-        customer.push_back({a,b});
+
+    vector<int> arrivals(n), departures(n);
+    for (int i = 0; i < n; i++) {
+        cin >> arrivals[i] >> departures[i];
     }
 
-    // Sort the customers based on their arrival time
-    sort(customer.begin(), customer.end(),cmp);
+    // Sort arrival and departure times separately
+    sort(arrivals.begin(), arrivals.end());
+    sort(departures.begin(), departures.end());
 
-vector<int> count(n,1);
-    
-    for (int i = 0; i < n; i++) {
-        for (int j = i+1; j < n; j++) {
-            if (customer[j].first <= customer[i].second) {
-                count[i]++;
-            }
+    int i = 0, j = 0;
+    int current = 0, max_customers = 0;
+
+    // Greedily move through events
+    while (i < n && j < n) {
+        if (arrivals[i] < departures[j]) {
+            current++;        // One more customer arrives
+            max_customers = max(max_customers, current);
+            i++;
+        } else {
+            current--;        // One customer leaves
+            j++;
         }
     }
-int max = *max_element(count.begin(), count.end());
-    cout << max ;
-    
+
+    cout << max_customers << '\n';
     return 0;
 }
