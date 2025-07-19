@@ -1,6 +1,6 @@
 #include<bits/stdc++.h>
 using namespace std; 
-bool cmp(int<pair<int,int>>a, int<pair<int,int>>b)
+bool cmp(pair<int,int>a, pair<int,int>b)
 {
     return a.second<b.second;
 }
