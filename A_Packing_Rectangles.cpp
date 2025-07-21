@@ -1,4 +1,4 @@
-#include<std/c++.h>
+#include<bits/stdc++.h>
 using namespace std;
 using ll = long long;
    ll w,h,n; 
