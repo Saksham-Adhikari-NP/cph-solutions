@@ -12,7 +12,7 @@ int main() {
     cin >> w >> h >> n;
     // min mo of and area 
 
-    int upper_bound = maxvalue(w, h) * n;
+    int upper_bound = max(w, h) * n;
     ll x = -1;
     for (ll b = upper_bound; b >= 1; b /= 2) {
     while (!ok(x+b)) x += b;
