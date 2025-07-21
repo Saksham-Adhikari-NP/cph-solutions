@@ -1,7 +1,11 @@
 #include<bits/stdc++.h>
 using namespace std;
 using ll = long long;
-   ll w,h,n; 
+ll w,h,n; 
+
+bool ok (ll s) {
+    return (s / w) * (s / h) >= n;
+} 
 
 int main() {
     // Example code to demonstrate the use of C++17 features
@@ -16,9 +20,7 @@ int main() {
     int k = x+1;
     cout << k ; 
 } 
-bool ok (ll s) {
-    return (s / w) * (s / h) >= n;
-} 
+
 
 
    
