@@ -1,26 +1,22 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 using ll = long long;
-ll w,h,n; 
+ll w, h, n;
 
-bool ok (ll s) {
+bool ok(ll s) {
     return (s / w) * (s / h) >= n;
-} 
+}
 
 int main() {
-    // Example code to demonstrate the use of C++17 features
     cin >> w >> h >> n;
-    // min mo of and area 
 
-    int upper_bound = max(w, h) * n;
+    ll upper_bound = 1;
+    while (!ok(upper_bound)) upper_bound *= 2;
+
     ll x = -1;
     for (ll b = upper_bound; b >= 1; b /= 2) {
-    while (!ok(x+b)) x += b;
+        while (!ok(x + b)) x += b;
     }
-    int k = x+1;
-    cout << k ; 
-} 
 
-
-
-   
+    cout << x + 1;
+}
