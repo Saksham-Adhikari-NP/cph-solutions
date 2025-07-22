@@ -1,37 +1,42 @@
 #include <bits/stdc++.h>
 using namespace std;
+using ll = long long;
 
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
     int n, m;
-    long long k;
+    ll k;
     cin >> n >> m >> k;
 
-    vector<long long> applicants(n);
-    for (int i = 0; i < n; i++) cin >> applicants[i];
+    vector<ll> desired_sizes(n);
+    for (int i = 0; i < n; i++) {
+        cin >> desired_sizes[i];
+    }
 
-    vector<long long> apartments(m);
-    for (int i = 0; i < m; i++) cin >> apartments[i];
+    multiset<ll> apartment_sizes;
+    for (int i = 0; i < m; i++) {
+        ll size;
+        cin >> size;
+        apartment_sizes.insert(size);
+    }
 
-    sort(applicants.begin(), applicants.end());
-    sort(apartments.begin(), apartments.end());
+    sort(desired_sizes.begin(), desired_sizes.end());
 
-    int i = 0, j = 0, count = 0;
+    int matched = 0;
 
-    while (i < n && j < m) {
-        if (apartments[j] < applicants[i] - k) j++;
-        else if (apartments[j] > applicants[i] + k) i++;
-        else {
-            count++;
-            i++;
-            j++;
+    for (int i = 0; i < n; i++) {
+        ll desired = desired_sizes[i];
+        ll min_acceptable = desired - k;
+        ll max_acceptable = desired + k;
+
+        auto it = apartment_sizes.lower_bound(min_acceptable);
+        if (it != apartment_sizes.end() && *it <= max_acceptable) {
+            matched++;
+            apartment_sizes.erase(it);
         }
     }
 
-    cout << count << "\n";
-
-    return 0;
-    // mike testing oh oh ohhh ma goff
+    cout << matched << "\n";
 }
