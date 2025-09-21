@@ -2,10 +2,10 @@
 using namespace std;
 int main () {
      
-    map<char , int> map;
-    map['a'] = 1;
-    map['b'] = 2;
-    map['c'] = 3;
+    map<char , int> m;
+    m['a'] = 1;
+    m['b'] = 2;
+    m['c'] = 3;
      cout<< m.begin()->first << " " << m.begin()->second << endl;
      m.erase(2);
      cout<< m.size() << endl;
