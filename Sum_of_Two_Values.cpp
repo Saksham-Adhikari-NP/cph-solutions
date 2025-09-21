@@ -2,6 +2,7 @@
 using namespace std;
 int main (){
 int n,x,sum=0;
+bool found = false;
 cin >> n >> x;
 vector<int> a(n);
 for (int i=0;i<n;i++){
@@ -18,9 +19,13 @@ l++;
 }
 if( sum == x ) 
 {
-cout << l << " " << r << endl;
+    found = true;
+cout << l+1 << " " << r+1 << endl;
 }
 r++ ;
 }
+if (!found)
+{
+cout << "IMPOSSIBLE" << endl;
 }
-
+}
