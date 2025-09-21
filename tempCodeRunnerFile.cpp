@@ -7,7 +7,7 @@ int main () {
     m['b'] = 2;
     m['c'] = 3;
      cout<< m.begin()->first << " " << m.begin()->second << endl;
-     m.erase(2);
+     m.erase('a');
      cout<< m.size() << endl;
         for(auto it : m){
             cout<< it.first << " " << it.second << endl;
