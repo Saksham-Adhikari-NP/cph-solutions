@@ -2,21 +2,26 @@
 using namespace std;
 int main (){
 
-    int n;
-    int x;
+     int n;
+    long long x;
     cin >> n >> x;
-    vector<int> a(n);
-    for (int i = 0; i < n; i++) cin >> a[i];
-
-    unordered_map<int, int> mp; // value -> index (1-based)
-
+    vector<pair<long long,int>> a(n);
     for (int i = 0; i < n; i++) {
-        int need = x - a[i];
-        if (mp.count(need)) {
-            cout << mp[need] << " " << i+1 << "\n";
+        cin >> a[i].first;
+        a[i].second = i+1;
+    }
+
+    sort(a.begin(), a.end());
+
+    int l = 0, r = n-1;
+    while (l < r) {
+        long long sum = a[l].first + a[r].first;
+        if (sum == x) {
+            cout << a[l].second << " " << a[r].second << "\n";
             return 0;
         }
-        mp[a[i]] = i+1;
+        if (sum < x) l++;
+        else r--;
     }
 
     cout << "IMPOSSIBLE\n";
