@@ -5,7 +5,7 @@ int main (){
     int n;
     int x;
     cin >> n >> x;
-    vector<long long> a(n);
+    vector<int> a(n);
     for (int i = 0; i < n; i++) cin >> a[i];
 
     unordered_map<int, int> mp; // value -> index (1-based)
