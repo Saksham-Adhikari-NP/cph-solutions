@@ -9,14 +9,14 @@ int main()
 
 
     vector<pair<int , int >> queries(n);
-    for (int i = 0; i < n; i+ +)
+    for (int i = 0; i < n; i++)
     {
         cin >> queries[i].first >> queries[i].second;
     }  
 
     // divisors 
     vector<int> divisors;
-    int ( i = 1 ; i * i <= g ; i++ )
+    for( int i = 1 ; i * i <= g ; i++ )
     {
         if ( g % i == 0 ) 
         {
@@ -32,7 +32,7 @@ int main()
 
 // ans 
 
-    for{i = 0 ; i < n ; i++ } 
+    for(i = 0 ; i < n ; i++) 
 {
 
     auto ptr = upper_bound(divisors.begin(),divisors.end(),queries[i].second);
