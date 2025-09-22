@@ -32,7 +32,7 @@ int main()
 
 // ans 
 
-    for(i = 0 ; i < n ; i++) 
+    for(int i = 0 ; i < n ; i++) 
 {
 
     auto ptr = upper_bound(divisors.begin(),divisors.end(),queries[i].second);
@@ -43,7 +43,7 @@ int main()
 
     }
     ptr--
-    if (*ptr >= queries[i}.first)
+    if (*ptr >= queries[i].first)
     {
         cout<< *ptr << endl;
     }
