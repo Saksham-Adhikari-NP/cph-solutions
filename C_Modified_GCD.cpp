@@ -42,7 +42,7 @@ int main()
             continue;
 
         }
-        ptr--
+        ptr--;
         if(*ptr >= queries[i].first)
         {
             cout<< *ptr << endl;
