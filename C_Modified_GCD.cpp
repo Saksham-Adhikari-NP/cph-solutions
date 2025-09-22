@@ -3,10 +3,10 @@ using namespace std;
 int main() 
 {
     int a , b ;
-    int g = __gcd(a, b);
+    
     int n ; 
     cin >> a >> b >> n;
-
+    int g = __gcd(a, b);    
 
     vector<pair<int , int >> queries(n);
     for (int i = 0; i < n; i++)
@@ -36,7 +36,7 @@ int main()
 {
 
     auto ptr = upper_bound(divisors.begin(),divisors.end(),queries[i].second);
-    if ( ptr = divisors.begin())
+    if ( ptr == divisors.begin())
     {
         cout<< -1 
         continue;
