@@ -33,26 +33,27 @@ int main()
 // ans 
 
     for(int i = 0 ; i < n ; i++) 
-{
-
-    auto ptr = upper_bound(divisors.begin(),divisors.end(),queries[i].second);
-    if ( ptr == divisors.begin())
     {
-        cout<< -1 
-        continue;
+
+        auto ptr = upper_bound(divisors.begin(),divisors.end(),queries[i].second);
+        if ( ptr == divisors.begin())
+        {
+            cout<< -1;
+            continue;
+
+        }
+        ptr--
+        if (*ptr >= queries[i].first)
+        {
+            cout<< *ptr << endl;
+        }
+        else 
+        {
+            cout<< -1 << endl;
+        }
+
 
     }
-    ptr--
-    if (*ptr >= queries[i].first)
-    {
-        cout<< *ptr << endl;
-    }
-    else 
-    {
-        cout<< -1 << endl;
-    }
-
-
-
-        return 0;
+ 
+    return 0;
 }
