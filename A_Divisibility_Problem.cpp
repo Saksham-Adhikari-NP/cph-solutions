@@ -6,11 +6,11 @@ int main ()
      cin>> t ;
       while (t --)
       {
-         int a , b , ans ; 
+         int a , b , ans, d  ; 
          cin >> a >> b ; 
         ans = a%b ;
         d = min_element(ans , b-ans)
-        cout << ans << "\n";
+        cout << d << "\n";
       } 
 
 }
