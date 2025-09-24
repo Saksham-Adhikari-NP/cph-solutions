@@ -18,7 +18,7 @@ int main ()
                 count--;
 
             }
-            else count --; 
+            else count ++; 
 
             result = min(result , count);
 
