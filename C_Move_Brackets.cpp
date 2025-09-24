@@ -25,4 +25,5 @@ int main ()
         } 
 
         cout << abs(result) << "\n";
+      }
 }
