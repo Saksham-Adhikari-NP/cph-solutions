@@ -11,7 +11,7 @@ int main ()
         for(int i=0 ; i < b.size(); i++)
 
         {
-            if( (i>2) && (i%2 = 0))  
+            if( (i>2) && (i%2 == 0))  
             {
                 continue;
             }
