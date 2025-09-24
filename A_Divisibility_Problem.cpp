@@ -9,6 +9,7 @@ int main ()
          int a , b , ans ; 
          cin >> a >> b ; 
         ans = a%b ;
+        d = min_element(ans , b-ans)
         cout << ans << "\n";
       } 
 
