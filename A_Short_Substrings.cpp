@@ -13,8 +13,10 @@ int main ()
 
         {
             
-                cout << b[i];
+                a += b[i];
             
         }
+
+        cout << r << endl;
     }
 }
