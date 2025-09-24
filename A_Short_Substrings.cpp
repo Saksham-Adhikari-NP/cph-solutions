@@ -8,10 +8,10 @@ int main ()
     {
         string b; 
         cin >> b;
-        for(int =0 ; i < b.size(); i++)
+        for(int i=0 ; i < b.size(); i++)
 
         {
-            if( int  > 2 && i % 2 = 0)  
+            if( i> 2 && i % 2 = 0)  
             {
                 continue;
             }
