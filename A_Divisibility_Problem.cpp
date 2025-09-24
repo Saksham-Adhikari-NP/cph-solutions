@@ -9,7 +9,7 @@ int main ()
          int a , b , ans ; 
          cin >> a >> b ; 
         ans = a%b ;
-        cout << ans << "/n";
+        cout << ans << "\n";
       } 
 
 }
