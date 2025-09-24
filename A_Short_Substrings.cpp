@@ -6,18 +6,15 @@ int main ()
      cin >> t;
     while(t--)
     {
-        string b; 
+        string b,r; 
         cin >> b;
-        for(int i=0 ; i < b.size(); i++)
+        r+= b[0]
+        for(int i=1 ; i < b.size(); i+=2 )
 
         {
-            if( (i>1) && (i%2 == 1))  
-            {
-                continue;
-            }
-            else {
+            
                 cout << b[i];
-            }
+            
         }
     }
 }
