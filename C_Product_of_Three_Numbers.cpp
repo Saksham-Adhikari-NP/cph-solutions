@@ -2,13 +2,15 @@
 using namespace std;
 int main () 
 {
-    int t,n ;
+    int t ;
  
-    int i; 
+   
 
     cin >> t ;
         while (t --)
         {
+
+            int n , i ;
                 int a ,b=0 ,c,d,m;
              cin >> n ; 
             for ( i = 1 ; i*i <= n ; i++ )
