@@ -2,13 +2,13 @@
 using namespace std;
 int main () 
 {
-     int t,n ;
+    int t,n ;
     int a ,b=0 ,c,d; 
     int i; 
 
     cin >> t ;
         while (t --)
-        [
+        {
              cin >> n ; 
             for ( i = 1 ; i*i <= n ; i++ )
             { if (n%i != 0)
@@ -35,7 +35,7 @@ int main ()
                 else cout << "NO" << endl;
             }
 
-
-        ]
+            rreturn 0 ;
+        }
 
 }
