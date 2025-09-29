@@ -13,26 +13,38 @@ int main ()
             for ( i = 1 ; i*i <= n ; i++ )
             { if (n%i != 0)
                 {
-                     b = i ; 
+                     a = i ; 
                      break ; 
                 } 
                 
             }   
 
-            if ( b == 0 )
+            if ( a == 0 )
             {
                  cout << "NO" << endl;
 
             }
             else { 
-                a =sqrt(n);
-                c = n / ( a*b);
-                if ( (a>1) && ( b >1 )) 
+                m = n / a ;
+                for ( i = a+1 ; i*i <= m ; i++ ) 
                 {
-                     cout << "YES"<< endl;
-                        cout << a << " " << b << " " << c << endl;
+                     if ( n%i == 0)
+                     {
+                        b = i;
+                     }
                 }
-                else cout << "NO" << endl;
+
+                c = n / (a*b) 
+
+                if ((b>1) && (c>1)) 
+                {
+                    cout << "YES" << endl;
+                    cout << a << " " << b << " " << c << endl;
+                }
+                else 
+                {
+                    cout << "NO" << endl;
+                }
             }
 
             return 0 ;
