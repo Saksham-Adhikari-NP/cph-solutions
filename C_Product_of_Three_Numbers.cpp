@@ -25,7 +25,7 @@ int main ()
 
             }
             else { 
-                a =sqrt(n)
+                a =sqrt(n);
                 c = n / ( a*b);
                 if ( (a>1) && ( b >1 )) 
                 {
