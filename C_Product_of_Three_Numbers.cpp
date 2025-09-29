@@ -21,7 +21,7 @@ int main ()
 
             if ( b == 0 )
             {
-                 cout << NO << endl;
+                 cout << "NO" << endl;
 
             }
             else { 
@@ -30,10 +30,10 @@ int main ()
                 c = n / ( a*b);
                 if ( (a>1_) && ( b >1 )) 
                 {
-                     cout << YES << endl;
+                     cout << "YES"<< endl;
                         cout << a << " " << b << " " << c << endl;
                 }
-                else cout << NO << endl;
+                else cout << "NO" << endl;
             }
 
 
