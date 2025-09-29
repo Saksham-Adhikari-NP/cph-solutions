@@ -3,7 +3,7 @@ using namespace std;
 int main () 
 {
      int t,n ;
-    int a ,b=0 ,c; 
+    int a ,b=0 ,c,d; 
     int i; 
 
     cin >> t ;
@@ -25,10 +25,9 @@ int main ()
 
             }
             else { 
-
-                a*a = n 
+                a =sqrt(n)
                 c = n / ( a*b);
-                if ( (a>1_) && ( b >1 )) 
+                if ( (a>1) && ( b >1 )) 
                 {
                      cout << "YES"<< endl;
                         cout << a << " " << b << " " << c << endl;
