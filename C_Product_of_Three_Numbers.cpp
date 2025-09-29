@@ -3,18 +3,21 @@ using namespace std;
 int main () 
 {
     int t,n ;
-    int a ,b=0 ,c,d,m; 
+ 
     int i; 
 
     cin >> t ;
         while (t --)
         {
+                int a ,b=0 ,c,d,m;
              cin >> n ; 
             for ( i = 1 ; i*i <= n ; i++ )
             { if (n%i != 0)
                 {
                      a = i ; 
+                     m = n /a;
                      break ; 
+
                 } 
                 
             }   
@@ -25,18 +28,20 @@ int main ()
 
             }
             else { 
-                m = n / a ;
+               
                 for ( i = a+1 ; i*i <= m ; i++ ) 
                 {
-                     if ( n%i == 0)
+                     if ( m%i == 0)
                      {
                         b = i;
+                        break ; 
                      }
                 }
 
                 c = n / (a*b) ;
 
-                if ((b>1) && (c>1)) 
+                if ((b>1) && (c>1) && (a != b && b != c && a != c))
+
                 {
                     cout << "YES" << endl;
                     cout << a << " " << b << " " << c << endl;
