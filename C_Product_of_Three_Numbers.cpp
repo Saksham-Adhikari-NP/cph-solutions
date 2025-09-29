@@ -42,7 +42,7 @@ int main ()
 
                 c = n / (a*b) ;
 
-                if ((b>1) && (c>1) && ( (a != b) && (b != c) && (a != c))
+                if ((b>1) && (c>1) && ( (a != b) && (b != c) && (a != c))) 
 
                 {
                     cout << "YES" << endl;
