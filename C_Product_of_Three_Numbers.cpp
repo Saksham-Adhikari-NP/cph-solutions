@@ -11,10 +11,10 @@ int main ()
         {
 
             int n , i ;
-                int a ,b=0 ,c,d,m;
+                int a = 0 ,b=0 ,c = 0 ,d,m;
              cin >> n ; 
             for ( i = 1 ; i*i <= n ; i++ )
-            { if (n%i != 0)
+            { if (n%i == 0)
                 {
                      a = i ; 
                      m = n /a;
