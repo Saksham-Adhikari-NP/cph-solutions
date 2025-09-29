@@ -35,7 +35,7 @@ int main ()
                 else cout << "NO" << endl;
             }
 
-            rreturn 0 ;
+            return 0 ;
         }
 
 }
