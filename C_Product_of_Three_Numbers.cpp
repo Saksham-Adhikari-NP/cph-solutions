@@ -3,7 +3,7 @@ using namespace std;
 int main () 
 {
     int t,n ;
-    int a ,b=0 ,c,d; 
+    int a ,b=0 ,c,d,m; 
     int i; 
 
     cin >> t ;
@@ -34,7 +34,7 @@ int main ()
                      }
                 }
 
-                c = n / (a*b) 
+                c = n / (a*b) ;
 
                 if ((b>1) && (c>1)) 
                 {
