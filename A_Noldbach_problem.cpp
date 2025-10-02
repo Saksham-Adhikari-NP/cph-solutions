@@ -34,8 +34,8 @@ int32_t main() {
         if (sum <= n && is_prime[sum]) count++;
     }
 
-    if (count >= k) cout << "YES\n";
-    else cout << endl;
+    if (count >= k) cout << "YES"<<endl;
+    else cout <<"NO" <<  endl;
 
     return 0;
 }
