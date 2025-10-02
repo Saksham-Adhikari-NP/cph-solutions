@@ -3,9 +3,8 @@ using namespace std;
 
 const int MOD = 1e9 + 7;
 
-// Modular exponentiation
 long long modpow(long long a, long long b, long long m) {
-    if (b == 0) return 1;        // 0^0 = 1 also handled
+    if (b == 0) return 1;      
     long long res = 1;
     a %= m;
     while (b > 0) {
