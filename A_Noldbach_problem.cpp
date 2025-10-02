@@ -9,7 +9,7 @@ int32_t main() {
     int n , k ;
     cin >> n >> k;
      
-    bool is_prime[1001] = {false}:
+    bool is_prime[1001] = {false};
     for ( int i =2 ; i<= 1000 ; i++ ) is_prime[i] = true;
 
     for (int i =2; i<= 1000 ; i++)
