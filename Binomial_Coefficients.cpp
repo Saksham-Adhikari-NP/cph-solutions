@@ -4,11 +4,13 @@ const int MOD = 1e9+7;
 const int MAXN = 1e6;
 
 long long modpow(long long a, long long e, long long m=MOD) {
+    if (b == 0) return 1;      
     long long res = 1;
-    while (e > 0) {
-        if (e & 1) res = res * a % m;
-        a = a * a % m;
-        e /= 1;
+    a %= m;
+    while (b > 0) {
+        if (b % 2 == 1) res = (res * a) % m;
+        a = (a * a) % m;
+        b /= 2;
     }
     return res;
 }
