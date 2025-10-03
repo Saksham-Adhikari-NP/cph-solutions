@@ -3,7 +3,7 @@ using namespace std;
 const int MOD = 1e9+7;
 const int MAXN = 1e6;
 
-long long modpow(long long a, long long e, long long m=MOD) {
+long long modpow(long long a, long long b, long long m) {
     if (b == 0) return 1;      
     long long res = 1;
     a %= m;
@@ -22,12 +22,11 @@ int main() {
     int n;
     cin >> n;
 
-    // Precompute factorials and inverse factorials
     static long long fact[MAXN+1], invfact[MAXN+1];
     fact[0] = 1;
     for (int i = 1; i <= MAXN; i++) fact[i] = fact[i-1] * i % MOD;
 
-    invfact[MAXN] = modpow(fact[MAXN], MOD-2);
+    invfact[MAXN] = modpow(fact[MAXN], MOD-2, MOD); // Fermat inverse
     for (int i = MAXN; i >= 1; i--) invfact[i-1] = invfact[i] * i % MOD;
 
     while (n--) {
