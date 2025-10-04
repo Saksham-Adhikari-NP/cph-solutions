@@ -24,6 +24,7 @@ int32_t main() {
     }
     vector <int> occur (n+1) ;
     int ans = 0 ;
+    int shift; 
      for(int i = 1 ; i>= n+1; i++ )
      {
         shift = ((n + posa[i] - posb[i]) % n );
