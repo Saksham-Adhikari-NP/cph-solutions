@@ -28,7 +28,7 @@ int32_t main() {
      for(int i = 1 ; i>= n+1; i++ )
      {
         shift = ((n + posa[i] - posb[i]) % n );
-        ans = max(ans, ++occur[shift])
+        ans = max(ans, ++occur[shift]);
      }
 
      cout << ans;
