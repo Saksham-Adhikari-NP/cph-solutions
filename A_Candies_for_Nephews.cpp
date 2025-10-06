@@ -11,7 +11,22 @@ int32_t main() {
     cin >> t;
     while (t--) {
         // solve here
+            int n ;
+            cin >> n;
 
+            const int r = n%3 ;
+            if(r == 1)
+            {
+                cout << "2";
+            }
+            else if (r==2)
+            {
+                cout << "1";
+            }
+            else {
+                cout << "0";
+            }
+            
 
     }
     
