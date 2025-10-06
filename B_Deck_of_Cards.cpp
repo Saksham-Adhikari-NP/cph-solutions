@@ -28,6 +28,6 @@ int main() {
             else if (i <= max_top || i > n - max_bottom)
                 res[i-1] = '?';
         }
-        cout << res << endl ;
+        cout << res << endl;
     }
 }
