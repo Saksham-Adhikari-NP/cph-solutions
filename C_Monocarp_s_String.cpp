@@ -18,7 +18,7 @@ void solve() {
             continue;
         }
 
-        if (total_a == 0 || total_b == 0 || (total_a + total_b) % 2 == 1) {
+        if (total_a == 0 || total_b == 0) {
             cout << -1 << "\n";
             continue;
         }
@@ -34,8 +34,11 @@ void solve() {
 
                 int diff = count_a - count_b;
                 if (diff == target_diff) {
-                    min_length = min(min_length, j - i + 1);
-                    break;
+                    int length = j - i + 1;
+                    int remaining_total = (total_a + total_b) - length;
+                    if (remaining_total % 2 == 0) {
+                        min_length = min(min_length, length);
+                    }
                 }
             }
         }
