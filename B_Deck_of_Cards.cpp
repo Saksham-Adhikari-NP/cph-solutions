@@ -19,22 +19,21 @@ int main() {
         int min_top = top, max_top = top + unknown;
         int min_bottom = bottom, max_bottom = bottom + unknown;
 
-         // edge case 
-
-        
-
-
         string res(n, '+');
-        if(k>= n)
-        {
-            cout << res(n,'-');
+
+        // ✅ edge case: all cards removed
+        if (k >= n) {
+            cout << string(n, '-') << '\n';
+            continue;
         }
+
         for (int i = 1; i <= n; i++) {
             if (i <= min_top || i > n - min_bottom)
-                res[i-1] = '-';
+                res[i - 1] = '-';
             else if (i <= max_top || i > n - max_bottom)
-                res[i-1] = '?';
+                res[i - 1] = '?';
         }
-        cout << res << endl ;
+
+        cout << res << '\n';
     }
 }
