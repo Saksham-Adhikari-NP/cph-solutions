@@ -21,7 +21,7 @@ int main() {
 
         string res(n, '+');
 
-        // ✅ edge case: all cards removed
+     
         if (k >= n) {
             cout << string(n, '-') << '\n';
             continue;
