@@ -21,13 +21,14 @@ int main() {
 
          // edge case 
 
+        
+
+
+        string res(n, '+');
         if(k>= n)
         {
             cout << res(n,'-');
         }
-
-        
-        string res(n, '+');
         for (int i = 1; i <= n; i++) {
             if (i <= min_top || i > n - min_bottom)
                 res[i-1] = '-';
