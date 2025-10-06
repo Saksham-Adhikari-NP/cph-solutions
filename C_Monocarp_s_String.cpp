@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int32_t main() {
+int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
@@ -12,30 +12,39 @@ int32_t main() {
         string s;
         cin >> n >> s;
 
-        vector<int> arr(n);
-        for (int i = 0; i < n; i++)
-            arr[i] = (s[i] == 'a' ? 1 : -1);
+        int total_a = 0, total_b = 0;
+        for (char c : s) {
+            if (c == 'a') total_a++;
+            else total_b++;
+        }
 
-        int total = accumulate(arr.begin(), arr.end(), 0);
-        if (total == 0) {
+        if (total_a == total_b) {
             cout << 0 << '\n';
             continue;
         }
-
-        unordered_map<int,int> mp;
-        mp[0] = -1;
-
-        int pre = 0;
-        int ans = n + 1;
-
-        for (int i = 0; i < n; i++) {
-            pre += arr[i];
-            if (mp.count(pre - total))
-                ans = min(ans, i - mp[pre - total]);
-            if (!mp.count(pre))
-                mp[pre] = i;
+        if (total_a == 0 || total_b == 0) {
+            cout << -1 << '\n';
+            continue;
         }
 
-        cout << (ans > n ? -1 : ans) << '\n';
+        int diff = total_a - total_b;
+        int prefix = 0, min_len = n;
+        unordered_map<int, int> first_occurrence;
+        first_occurrence[0] = -1;
+
+        for (int i = 0; i < n; i++) {
+            prefix += (s[i] == 'a' ? 1 : -1);
+
+            int target = prefix - diff;
+            if (first_occurrence.count(target)) {
+                min_len = min(min_len, i - first_occurrence[target]);
+            }
+
+            if (!first_occurrence.count(prefix)) {
+                first_occurrence[prefix] = i;
+            }
+        }
+
+        cout << min_len << '\n';
     }
 }
