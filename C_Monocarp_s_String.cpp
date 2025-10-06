@@ -1,50 +1,56 @@
-#include <bits/stdc++.h>
-using namespace std;
+def solve():
+    t = int(input())
+    
+    for _ in range(t):
+        n = int(input())
+        s = input().strip()
+        
+        # Count total a's and b's
+        total_a = s.count('a')
+        total_b = s.count('b')
+        
+        # If already balanced
+        if total_a == total_b:
+            print(0)
+            continue
+        
+        # If all characters are same type
+        if total_a == 0 or total_b == 0:
+            print(-1)
+            continue
+        
+        # If total count is odd, impossible to balance
+        if (total_a + total_b) % 2 == 1:
+            print(-1)
+            continue
+        
+        # We need to find shortest substring where:
+        # count_a_in_substring - count_b_in_substring = total_a - total_b
+        target_diff = total_a - total_b
+        
+        min_length = n + 1
+        
+        # Try all possible substrings
+        for i in range(n):
+            count_a = 0
+            count_b = 0
+            
+            for j in range(i, n):
+                if s[j] == 'a':
+                    count_a += 1
+                else:
+                    count_b += 1
+                
+                diff = count_a - count_b
+                
+                if diff == target_diff:
+                    length = j - i + 1
+                    min_length = min(min_length, length)
+                    break  # Found for this starting position
+        
+        if min_length == n + 1:
+            print(-1)
+        else:
+            print(min_length)
 
-int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-
-    int t;
-    cin >> t;
-    while (t--) {
-        int n;
-        string s;
-        cin >> n >> s;
-
-        int total_a = 0, total_b = 0;
-        for (char c : s) {
-            if (c == 'a') total_a++;
-            else total_b++;
-        }
-
-        if (total_a == total_b) {
-            cout << 0 << '\n';
-            continue;
-        }
-        if (total_a == 0 || total_b == 0) {
-            cout << -1 << '\n';
-            continue;
-        }
-
-        int diff = total_a - total_b;
-        int prefix = 0, min_len = n;  // worst case: entire string
-        unordered_map<int, int> first_occurrence;
-        first_occurrence[0] = -1;
-
-        for (int i = 0; i < n; i++) {
-            prefix += (s[i] == 'a' ? 1 : -1);
-
-            int target = prefix - diff;
-            if (first_occurrence.count(target)) {
-                min_len = min(min_len, i - first_occurrence[target]);
-            }
-
-            if (!first_occurrence.count(prefix)) {
-                first_occurrence[prefix] = i;
-            }
-        }
-
-        cout << (min_len == n ? -1 : min_len) << '\n';
-    }
-}
+solve()
