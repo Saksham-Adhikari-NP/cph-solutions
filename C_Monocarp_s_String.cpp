@@ -28,7 +28,7 @@ int main() {
         }
 
         int diff = total_a - total_b;
-        int prefix = 0, min_len = n;
+        int prefix = 0, min_len = n;  // worst case: entire string
         unordered_map<int, int> first_occurrence;
         first_occurrence[0] = -1;
 
@@ -45,6 +45,6 @@ int main() {
             }
         }
 
-        cout << min_len << '\n';
+        cout << (min_len == n ? -1 : min_len) << '\n';
     }
 }
