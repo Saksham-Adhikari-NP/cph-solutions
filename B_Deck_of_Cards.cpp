@@ -4,8 +4,7 @@ using namespace std;
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-    #define int long long
-    #define endl '\n'
+    
 
     int t;
     cin >> t;
@@ -28,6 +27,6 @@ int main() {
             else if (i <= max_top || i > n - max_bottom)
                 res[i-1] = '?';
         }
-        cout << res << endl;
+        cout << res << "\n";
     }
 }
