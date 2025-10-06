@@ -14,17 +14,17 @@ int32_t main() {
             int n ;
             cin >> n;
 
-            const int r = n%3 ;
+             int r = n%3 ;
             if(r == 1)
             {
-                cout << "2";
+                cout << ++r ;
             }
             else if (r==2)
             {
-                cout << "1";
+                cout << --r ;
             }
             else {
-                cout << "0";
+                cout << r;
             }
             
 
