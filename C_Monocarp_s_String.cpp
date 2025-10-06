@@ -1,56 +1,53 @@
-def solve():
-    t = int(input())
-    
-    for _ in range(t):
-        n = int(input())
-        s = input().strip()
-        
-        # Count total a's and b's
-        total_a = s.count('a')
-        total_b = s.count('b')
-        
-        # If already balanced
-        if total_a == total_b:
-            print(0)
-            continue
-        
-        # If all characters are same type
-        if total_a == 0 or total_b == 0:
-            print(-1)
-            continue
-        
-        # If total count is odd, impossible to balance
-        if (total_a + total_b) % 2 == 1:
-            print(-1)
-            continue
-        
-        # We need to find shortest substring where:
-        # count_a_in_substring - count_b_in_substring = total_a - total_b
-        target_diff = total_a - total_b
-        
-        min_length = n + 1
-        
-        # Try all possible substrings
-        for i in range(n):
-            count_a = 0
-            count_b = 0
-            
-            for j in range(i, n):
-                if s[j] == 'a':
-                    count_a += 1
-                else:
-                    count_b += 1
-                
-                diff = count_a - count_b
-                
-                if diff == target_diff:
-                    length = j - i + 1
-                    min_length = min(min_length, length)
-                    break  # Found for this starting position
-        
-        if min_length == n + 1:
-            print(-1)
-        else:
-            print(min_length)
+#include <bits/stdc++.h>
+using namespace std;
 
-solve()
+void solve() {
+    int t;
+    cin >> t;
+    while (t--) {
+        int n;
+        cin >> n;
+        string s;
+        cin >> s;
+
+        int total_a = count(s.begin(), s.end(), 'a');
+        int total_b = count(s.begin(), s.end(), 'b');
+
+        if (total_a == total_b) {
+            cout << 0 << "\n";
+            continue;
+        }
+
+        if (total_a == 0 || total_b == 0 || (total_a + total_b) % 2 == 1) {
+            cout << -1 << "\n";
+            continue;
+        }
+
+        int target_diff = total_a - total_b;
+        int min_length = n + 1;
+
+        for (int i = 0; i < n; i++) {
+            int count_a = 0, count_b = 0;
+            for (int j = i; j < n; j++) {
+                if (s[j] == 'a') count_a++;
+                else count_b++;
+
+                int diff = count_a - count_b;
+                if (diff == target_diff) {
+                    min_length = min(min_length, j - i + 1);
+                    break;
+                }
+            }
+        }
+
+        if (min_length == n + 1) cout << -1 << "\n";
+        else cout << min_length << "\n";
+    }
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    solve();
+    return 0;
+}
