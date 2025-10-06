@@ -14,11 +14,19 @@ int main() {
 
         int top = count(s.begin(), s.end(), '0');
         int bottom = count(s.begin(), s.end(), '1');
-        int flex = count(s.begin(), s.end(), '2');
+        int unknown = count(s.begin(), s.end(), '2');
 
-        int min_top = top, max_top = top + flex;
-        int min_bottom = bottom, max_bottom = bottom + flex;
+        int min_top = top, max_top = top + unknown;
+        int min_bottom = bottom, max_bottom = bottom + unknown;
 
+         // edge case 
+
+        if(k>= n)
+        {
+            cout << res(n,'-');
+        }
+
+        
         string res(n, '+');
         for (int i = 1; i <= n; i++) {
             if (i <= min_top || i > n - min_bottom)
@@ -26,6 +34,6 @@ int main() {
             else if (i <= max_top || i > n - max_bottom)
                 res[i-1] = '?';
         }
-        cout << res << "\n";
+        cout << res << endl ;
     }
 }
