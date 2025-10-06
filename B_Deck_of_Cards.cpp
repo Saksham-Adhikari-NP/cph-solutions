@@ -4,7 +4,6 @@ using namespace std;
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-    
 
     int t;
     cin >> t;
@@ -15,10 +14,10 @@ int main() {
 
         int top = count(s.begin(), s.end(), '0');
         int bottom = count(s.begin(), s.end(), '1');
-        int unknown = count(s.begin(), s.end(), '2');
+        int flex = count(s.begin(), s.end(), '2');
 
-        int min_top = top, max_top = top + unknown;
-        int min_bottom = bottom, max_bottom = bottom + unknown;
+        int min_top = top, max_top = top + flex;
+        int min_bottom = bottom, max_bottom = bottom + flex;
 
         string res(n, '+');
         for (int i = 1; i <= n; i++) {
