@@ -11,6 +11,13 @@ int32_t main() {
     cin >> t;
     while (t--) {
         // solve here
+                int n;
+        cin >> n;
+        vector<int> b(n);
+        for (int i = 0; i < n; ++i) cin >> b[i];
+        unordered_set<int> s;
+        for (int x : b) s.insert(x);
+        cout << (int)s.size() << endl;
 
 
     }
