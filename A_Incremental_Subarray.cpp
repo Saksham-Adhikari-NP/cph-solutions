@@ -17,30 +17,36 @@ int32_t main() {
             cin >> b[i];
         }
         
-        if (n == 0) {
-            cout << 0 << endl;
-            continue;
+        // Create a multiset to store positions of each beauty value
+        map<int, vector<int>> beautyPositions;
+        for (int i = 0; i < n; i++) {
+            beautyPositions[b[i]].push_back(i);
         }
         
         int maxApples = 0;
         
-        // Try each possible first apple to eat
+        // Try each starting position
         for (int start = 0; start < n; start++) {
             int count = 1;
             int lastEaten = b[start];
+            int currentPos = start;
             
-            // Keep going in cycles until we complete a full cycle without eating
-            bool ateInLastCycle = true;
-            int cycles = 0;
-            while (ateInLastCycle && cycles < n) {  // Limit cycles to prevent infinite loop
-                ateInLastCycle = false;
-                cycles++;
-                for (int i = 0; i < n; i++) {
-                    int idx = (start + 1 + i) % n;
-                    if (b[idx] > lastEaten) {
-                        lastEaten = b[idx];
+            // Keep searching for next apple with beauty > lastEaten
+            bool found = true;
+            while (found) {
+                found = false;
+                int bestPos = -1;
+                int bestBeauty = lastEaten;
+                
+                // Search for the next eatable apple
+                for (int lap = 0; lap < n && !found; lap++) {
+                    int pos = (currentPos + 1 + lap) % n;
+                    if (b[pos] > lastEaten) {
+                        lastEaten = b[pos];
+                        currentPos = pos;
                         count++;
-                        ateInLastCycle = true;
+                        found = true;
+                        break;
                     }
                 }
             }
