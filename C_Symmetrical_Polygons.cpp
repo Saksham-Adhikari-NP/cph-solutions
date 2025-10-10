@@ -3,65 +3,43 @@ using namespace std;
 
 int main() {
     ios::sync_with_stdio(false);
-    cin.tie(0);
+    cin.tie(nullptr);
+
     int t;
     cin >> t;
-    for(int test = 0; test < t; test++) {
+    while (t--) {
         int n;
         cin >> n;
         vector<long long> a(n);
-        for(auto &x : a) cin >> x;
+        for (auto &x : a) cin >> x;
+
         sort(a.rbegin(), a.rend());
-        vector<pair<long long, int>> groups;
-        int i = 0;
-        while(i < n) {
+
+        vector<long long> pairs;
+        vector<long long> leftover;
+
+        for (int i = 0; i < n; ) {
             long long len = a[i];
-            int cnt = 0;
-            while(i < n && a[i] == len) { cnt++; i++; }
-            groups.emplace_back(len, cnt);
+            int count = 0;
+            while (i < n && a[i] == len) { count++; i++; }
+            int numPairs = count / 2;
+            for (int j = 0; j < numPairs * 2; j++) pairs.push_back(len);
+            if (count % 2 == 1) leftover.push_back(len);
         }
-        int d = groups.size();
-        vector<long long> suffix_total(d + 1, 0);
-        vector<int> suffix_num(d + 1, 0);
-        for(int j = d - 1; j >= 0; j--) {
-            suffix_total[j] = suffix_total[j + 1] + groups[j].first * (long long)groups[j].second;
-            suffix_num[j] = suffix_num[j + 1] + groups[j].second;
+
+        sort(leftover.rbegin(), leftover.rend());
+        if (!leftover.empty()) pairs.push_back(leftover[0]);
+
+        if (pairs.size() < 3) {
+            cout << 0 << "\n";
+            continue;
         }
-        vector<int> odd_indices;
-        for(int j = 0; j < d; j++) {
-            if(groups[j].second % 2 == 1) odd_indices.push_back(j);
-        }
-        int sz_odd = odd_indices.size();
-        vector<long long> odd_lengths(sz_odd);
-        for(int q = 0; q < sz_odd; q++) {
-            odd_lengths[q] = groups[odd_indices[q]].first;
-        }
-        vector<long long> suffix_odd(sz_odd + 1, 0);
-        for(int q = sz_odd - 1; q >= 0; q--) {
-            suffix_odd[q] = suffix_odd[q + 1] + odd_lengths[q];
-        }
-        long long ans = 0;
-        for(int start = 0; start < d; start++) {
-            long long S_full = suffix_total[start];
-            int m_full = suffix_num[start];
-            if(m_full < 3) continue;
-            long long MX = groups[start].first;
-            auto it = lower_bound(odd_indices.begin(), odd_indices.end(), start);
-            int p_odd = it - odd_indices.begin();
-            int cur_odd_n = sz_odd - p_odd;
-            long long rem = 0;
-            int numrem = 0;
-            if(cur_odd_n > 2) {
-                rem = suffix_odd[p_odd + 2];
-                numrem = cur_odd_n - 2;
-            }
-            long long this_S = S_full - rem;
-            int this_m = m_full - numrem;
-            if(this_m >= 3 && this_S > 2LL * MX) {
-                ans = max(ans, this_S);
-            }
-        }
-        cout << ans << "\n";
+
+        sort(pairs.begin(), pairs.end());
+        long long sum = accumulate(pairs.begin(), pairs.end(), 0LL);
+        long long longest = pairs.back();
+
+        if (longest >= sum - longest) cout << 0 << "\n";
+        else cout << sum << "\n";
     }
-    return 0;
 }
