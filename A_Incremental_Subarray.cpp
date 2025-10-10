@@ -17,6 +17,11 @@ int32_t main() {
             cin >> b[i];
         }
         
+        if (n == 0) {
+            cout << 0 << endl;
+            continue;
+        }
+        
         int maxApples = 0;
         
         // Try each possible first apple to eat
@@ -26,8 +31,10 @@ int32_t main() {
             
             // Keep going in cycles until we complete a full cycle without eating
             bool ateInLastCycle = true;
-            while (ateInLastCycle) {
+            int cycles = 0;
+            while (ateInLastCycle && cycles < n) {  // Limit cycles to prevent infinite loop
                 ateInLastCycle = false;
+                cycles++;
                 for (int i = 0; i < n; i++) {
                     int idx = (start + 1 + i) % n;
                     if (b[idx] > lastEaten) {
