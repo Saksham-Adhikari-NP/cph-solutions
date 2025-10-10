@@ -7,48 +7,55 @@ int main() {
 
     int t;
     cin >> t;
-    while(t--) {
+    while (t--) {
         int n;
         cin >> n;
         vector<long long> a(n);
-        for(int i=0;i<n;i++) cin >> a[i];
+        for (int i = 0; i < n; i++) cin >> a[i];
 
-        sort(a.begin(), a.end()); // ascending
+        sort(a.rbegin(), a.rend()); // descending
+        vector<long long> sides;
+        unordered_map<long long,int> freq;
+        for(auto x : a) freq[x]++;
 
-        vector<long long> pairs; // store symmetric pairs
-        long long middle = 0;
-
-        for(int i=n-1;i>0;i--) {
-            if(a[i] == a[i-1]) {
-                pairs.push_back(a[i]);
-                pairs.push_back(a[i-1]);
-                i--; // skip used pair
+        // collect all pairs for symmetry
+        vector<long long> pairSides;
+        vector<long long> leftovers;
+        for(auto x : a) {
+            if(freq[x] >= 2) {
+                int pairs = freq[x]/2;
+                for(int i=0;i<pairs;i++){
+                    pairSides.push_back(x);
+                    pairSides.push_back(x);
+                }
+                freq[x] -= pairs*2;
             }
         }
-
-        // check for largest leftover as middle
-        for(int i=n-1;i>=0;i--) {
-            if(i==0 || a[i] != a[i-1]) {
-                bool used = false;
-                for(auto x : pairs) {
-                    if(x == a[i]) { used = true; break; }
-                }
-                if(!used) {
-                    middle = a[i];
-                    break;
-                }
-            }
+        for(auto x : a) {
+            if(freq[x] > 0) leftovers.push_back(x);
         }
 
-        if(middle) pairs.push_back(middle);
-        if(pairs.size() < 3) {
+        // take largest leftover as middle if exists
+        if(!leftovers.empty()) pairSides.push_back(leftovers[0]);
+
+        if(pairSides.size() < 3) {
             cout << 0 << "\n";
             continue;
         }
 
-        sort(pairs.begin(), pairs.end());
-        long long sum = accumulate(pairs.begin(), pairs.end(), 0LL);
-        long long longest = pairs.back();
+        sort(pairSides.begin(), pairSides.end());
+        long long sum = accumulate(pairSides.begin(), pairSides.end(),0LL);
+        long long longest = pairSides.back();
+
+        // check convexity, if fails remove smallest pair iteratively
+        int idx = 0;
+        while(longest >= sum - longest && pairSides.size()>=3){
+            if(pairSides.size()>=4){
+                sum -= pairSides[idx] + pairSides[idx+1];
+                idx += 2;
+            } else break;
+            longest = pairSides.back();
+        }
 
         if(longest >= sum - longest) cout << 0 << "\n";
         else cout << sum << "\n";
