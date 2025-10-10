@@ -8,17 +8,18 @@ int32_t main() {
     cin.tie(nullptr);
     
     int t;
-    cin >> t;
+    
+     if(!(cin >> t)) return 0;
     while (t--) {
         // solve here
-                int n;
-        cin >> n;
+        
+         int n; cin >> n;
         vector<int> b(n);
-        for (int i = 0; i < n; ++i) cin >> b[i];
-        unordered_set<int> s;
-        for (int x : b) s.insert(x);
-        cout << (int)s.size() << endl;
-
+        for (int i = 0; i < n; ++i) cin >> b[i];        
+        vector<bool> seen(n+1, false); // 1 <= bi <= n
+        int distinct = 0;
+        for (int x : b) if (!seen[x]) { seen[x] = true; ++distinct; }
+        cout << distinct << '\n';
 
     }
     
