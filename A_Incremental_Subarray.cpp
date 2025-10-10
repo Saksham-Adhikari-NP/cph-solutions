@@ -8,18 +8,27 @@ int32_t main() {
     cin.tie(nullptr);
     
     int t;
-    
-     if(!(cin >> t)) return 0;
+    cin >> t;
     while (t--) {
         // solve here
-        
-         int n; cin >> n;
+          int n;
+        cin >> n;
         vector<int> b(n);
-        for (int i = 0; i < n; ++i) cin >> b[i];        
-        vector<bool> seen(n+1, false); // 1 <= bi <= n
-        int distinct = 0;
-        for (int x : b) if (!seen[x]) { seen[x] = true; ++distinct; }
-        cout << distinct << '\n';
+        for (int i = 0; i < n; ++i) cin >> b[i];
+        vector<int> bb(2*n);
+        for (int i = 0; i < 2*n; ++i) bb[i] = b[i % n];
+        int ans = 1;
+        for (int start = 0; start < n; ++start) {
+            vector<int> lis;
+            for (int j = start; j < start + n; ++j) {
+                int x = bb[j];
+                auto it = upper_bound(lis.begin(), lis.end(), x);
+                if (it == lis.end()) lis.push_back(x);
+                else *it = x;
+            }
+            ans = max(ans, (int)lis.size());
+        }
+        cout << ans << endl;
 
     }
     
