@@ -10,8 +10,7 @@ int32_t main() {
     int t;
     cin >> t;
     while (t--) {
-        // solve here
-          int n;
+        int n;
         cin >> n;
         vector<int> b(n);
         for (int i = 0; i < n; ++i) cin >> b[i];
@@ -29,7 +28,6 @@ int32_t main() {
             ans = max(ans, (int)lis.size());
         }
         cout << ans << endl;
-
     }
     
     return 0;
