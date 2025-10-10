@@ -1,37 +1,38 @@
-#include <iostream>
-#include <vector>
-#include <set>
+#include <bits/stdc++.h>
+using namespace std;
+#define int long long
+#define endl '\n'
 
-// The solve function contains the logic for a single test case.
 void solve() {
     int n;
-    std::cin >> n;
-    
-    // A set is an ideal data structure here because it automatically
-    // stores only unique elements.
-    std::set<int> unique_beauties;
-    
-    // Read each beauty value and insert it into the set.
+    cin >> n;
+
+    // We use a std::set to store only the unique beauty values.
+    // IMPORTANT: This set must be created fresh for each test case.
+    // By declaring it here, it's re-created every time solve() is called.
+    set<int> unique_beauties;
+
+    // This loop MUST run 'n' times to read all the apple beauties.
+    // This is the most likely place where an error might be.
     for (int i = 0; i < n; ++i) {
         int b;
-        std::cin >> b;
+        cin >> b;
         unique_beauties.insert(b);
     }
-    
-    // The size of the set gives us the number of distinct beauty values.
-    // This is the maximum number of apples we can eat, as we can always
-    // pick one apple of each unique beauty in increasing order.
-    std::cout << unique_beauties.size() << '\n';
+
+    // The size of the set is the number of distinct beauties, which is our answer.
+    cout << unique_beauties.size() << endl;
 }
 
-int main() {
-    // Fast I/O operations.
-    std::ios_base::sync_with_stdio(false);
-    std::cin.tie(nullptr);
+int32_t main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
     
     int t;
-    std::cin >> t;
+    cin >> t;
     while (t--) {
+        // Putting the logic in a separate function like this is clean
+        // and helps avoid mistakes like declaring variables outside the loop.
         solve();
     }
     
