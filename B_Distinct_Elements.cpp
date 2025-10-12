@@ -3,42 +3,6 @@ using namespace std;
 #define int long long
 #define endl '\n'
 
-void solve() {
-    int n;
-    cin >> n;
-    vector<int> b(n);
-    for (int i = 0; i < n; ++i) {
-        cin >> b[i];
-    }
-
-    vector<int> a(n);
-    int b_prev = 0;
-    int unused_val_provider = n;
-
-    for (int i = 0; i < n; ++i) {
-        int b_curr = b[i];
-        int delta = b_curr - b_prev;
-        
-        int i_one_based = i + 1;
-        
-        int p_one_based = i_one_based - delta;
-
-        if (p_one_based == 0) {
-            a[i] = unused_val_provider;
-            unused_val_provider--;
-        } else {
-            a[i] = a[p_one_based - 1];
-        }
-
-        b_prev = b_curr;
-    }
-
-    for (int i = 0; i < n; ++i) {
-        cout << a[i] << (i == n - 1 ? "" : " ");
-    }
-    cout << endl;
-}
-
 int32_t main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
@@ -46,7 +10,34 @@ int32_t main() {
     int t;
     cin >> t;
     while (t--) {
-        solve();
+        int n;
+        cin >> n;
+        vector<int> b(n + 1);
+        for (int i = 1; i <= n; i++) {
+            cin >> b[i];
+        }
+        
+        vector<int> a(n + 1);
+        int next_new = 1;
+        
+        for (int i = 1; i <= n; i++) {
+            int diff = b[i] - b[i - 1];
+            int last_pos = i - diff;
+            
+            if (last_pos == 0) {
+                // New element
+                a[i] = next_new++;
+            } else {
+                // Reuse element from position last_pos
+                a[i] = a[last_pos];
+            }
+        }
+        
+        for (int i = 1; i <= n; i++) {
+            cout << a[i];
+            if (i < n) cout << " ";
+        }
+        cout << endl;
     }
     return 0;
 }
