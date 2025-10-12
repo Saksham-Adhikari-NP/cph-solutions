@@ -13,21 +13,21 @@ void solve() {
 
     vector<int> a(n);
     int b_prev = 0;
-    int unused_val_provider = n; 
+    int unused_val_provider = n;
+
     for (int i = 0; i < n; ++i) {
         int b_curr = b[i];
         int delta = b_curr - b_prev;
-
         
-        int p_1_based = (i + 1) - delta;
+        int i_one_based = i + 1;
+        
+        int p_one_based = i_one_based - delta;
 
-        if (p_1_based == 0) {
-            // This means a[i] must be a new value.
+        if (p_one_based == 0) {
             a[i] = unused_val_provider;
             unused_val_provider--;
         } else {
-           
-            a[i] = a[p_1_based - 1];
+            a[i] = a[p_one_based - 1];
         }
 
         b_prev = b_curr;
