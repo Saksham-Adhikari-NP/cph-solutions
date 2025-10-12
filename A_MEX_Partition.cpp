@@ -19,13 +19,10 @@ int32_t main() {
             freq[x]++;
         }
 
-        int mex1 = 0;
-        while(freq[mex1] > 0) mex1++;
+        int score = 0;
+        while(score <= 101 && freq[score] > 0) score++;
 
-        int mex2 = 0;
-        while(freq[mex2] > 1) mex2++;
-
-        cout << mex1 + mex2 << endl;
+        cout << score << endl;
     }
 
     return 0;
