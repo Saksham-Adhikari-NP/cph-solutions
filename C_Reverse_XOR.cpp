@@ -3,8 +3,22 @@ using namespace std;
 #define int long long
 #define endl '\n'
 
-bool isPowerOfTwo(unsigned long long x) {
-    return x && ((x & (x - 1)) == 0);
+// reverse binary without leading zeros
+int reverseBinary(int x) {
+    int y = 0;
+    while (x) {
+        y = (y << 1) | (x & 1);
+        x >>= 1;
+    }
+    return y;
+}
+
+// check if there exists x such that x ^ f(x) = n
+bool exists(int n) {
+    for (int x = 1; x <= (1 << 20); x++) { // 2^20 is safe for small n
+        if ((x ^ reverseBinary(x)) == n) return true;
+    }
+    return false;
 }
 
 int32_t main() {
@@ -14,9 +28,9 @@ int32_t main() {
     int t;
     cin >> t;
     while (t--) {
-        unsigned long long n;
+        int n;
         cin >> n;
-        if (n == 0 || !isPowerOfTwo(n + 1)) cout << "YES" << endl;
+        if (exists(n)) cout << "YES" << endl;
         else cout << "NO" << endl;
     }
     
