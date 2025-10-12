@@ -10,10 +10,9 @@ int32_t main() {
     int t;
     cin >> t;
     while (t--) {
-        int n; 
+        int n;
         cin >> n;
-        vector<int> a(n);
-        vector<int> cnt(101, 0);
+        vector<int> a(n), cnt(101, 0);
         for (int i = 0; i < n; i++) {
             cin >> a[i];
             cnt[a[i]]++;
@@ -21,12 +20,12 @@ int32_t main() {
 
         int ans = 0;
         for (int i = 0; i <= 100; i++) {
-            if (cnt[i] == 0) {  
+            if (cnt[i] == 0) {
                 ans = i;
                 break;
             }
-            if (cnt[i] == 1) {  // cannot repeat in all parts
-                ans = i;
+            if (cnt[i] == 1) {
+                ans = i + 1;
                 break;
             }
         }
