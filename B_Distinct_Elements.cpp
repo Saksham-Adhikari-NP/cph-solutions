@@ -18,18 +18,22 @@ int32_t main() {
         }
         
         vector<int> a(n + 1);
+        map<int, int> last_pos; // last_pos[value] = last position where this value appeared
         int next_new = 1;
         
         for (int i = 1; i <= n; i++) {
             int diff = b[i] - b[i - 1];
-            int last_pos = i - diff;
+            int required_last = i - diff;
             
-            if (last_pos == 0) {
-                // New element
-                a[i] = next_new++;
+            if (required_last == 0) {
+                // Need a completely new value
+                a[i] = next_new;
+                last_pos[next_new] = i;
+                next_new++;
             } else {
-                // Reuse element from position last_pos
-                a[i] = a[last_pos];
+                // Need to reuse value from position required_last
+                a[i] = a[required_last];
+                last_pos[a[i]] = i;
             }
         }
         
