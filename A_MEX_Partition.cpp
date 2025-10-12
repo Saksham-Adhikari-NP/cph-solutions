@@ -21,11 +21,11 @@ int32_t main() {
 
         int ans = 0;
         for (int i = 0; i <= 100; i++) {
-            if (cnt[i] == 0) {  // missing number
+            if (cnt[i] == 0) {  
                 ans = i;
                 break;
             }
-            if (cnt[i] == 1) {  // cannot repeat in all partitions
+            if (cnt[i] == 1) {  // cannot repeat in all parts
                 ans = i;
                 break;
             }
