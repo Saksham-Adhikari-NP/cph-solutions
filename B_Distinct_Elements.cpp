@@ -6,14 +6,31 @@ using namespace std;
 int32_t main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-    
+
     int t;
     cin >> t;
     while (t--) {
-        // solve here
+        int n;
+        cin >> n;
+        vector<long long> b(n);
+        for (int i = 0; i < n; i++) cin >> b[i];
 
+        vector<int> a(n);
+        long long prev = 0;
+        int next_new = 2;
+        a[0] = 1; // always can start with 1
 
+        for (int i = 1; i < n; i++) {
+            long long diff = b[i] - b[i - 1];
+            if (diff == i + 1) {
+                a[i] = next_new++;
+            } else {
+                a[i] = a[i - 1];
+            }
+        }
+
+        for (int i = 0; i < n; i++) cout << a[i] << " ";
+        cout << endl;
     }
-    
     return 0;
 }
