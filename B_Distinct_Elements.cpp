@@ -9,34 +9,35 @@ int32_t main() {
 
     int t;
     cin >> t;
-    while(t--) {
+    while (t--) {
         int n;
         cin >> n;
         vector<long long> b(n);
-        for(int i=0;i<n;i++) cin >> b[i];
+        for (int i = 0; i < n; i++) cin >> b[i];
 
         vector<int> a(n);
-        set<int> used;
-        int next_new = 1;
-        long long last = 0;
+        deque<int> reused;          // numbers already assigned
+        int next_new = 1;           // next new number to assign
 
-        for(int i=0;i<n;i++){
+        long long last = 0;
+        for (int i = 0; i < n; i++) {
             long long delta = b[i] - last;
             last = b[i];
-            if(delta > 0){
+
+            if (delta > 0) {
+                // Assign a new number
                 a[i] = next_new;
-                used.insert(next_new);
+                reused.push_back(next_new); // add to reused pool
                 next_new++;
             } else {
-                // repeat any previously used number
-                a[i] = *used.begin();
+                // Assign any number from reused pool
+                a[i] = reused.back(); // pick most recently assigned number
             }
         }
 
-        for(int i=0;i<n;i++){
-            cout << a[i] << " ";
-        }
+        for (int i = 0; i < n; i++) cout << a[i] << " ";
         cout << endl;
     }
+
     return 0;
 }
