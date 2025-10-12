@@ -17,24 +17,19 @@ int32_t main() {
 
         vector<int> a(n);
         set<int> used;
-        queue<int> repeat_pool;
-        int last = 0;
         int next_new = 1;
+        long long last = 0;
 
         for(int i=0;i<n;i++){
-            int delta = b[i] - last;
+            long long delta = b[i] - last;
             last = b[i];
             if(delta > 0){
-                // pick delta new numbers
-                for(int j=0;j<delta;j++){
-                    while(used.count(next_new)) next_new++;
-                    a[i] = next_new;
-                    used.insert(next_new);
-                }
+                a[i] = next_new;
+                used.insert(next_new);
+                next_new++;
             } else {
-                // pick any number already used
-                if(!used.empty()) a[i] = *used.begin();
-                else a[i] = 1;
+                // repeat any previously used number
+                a[i] = *used.begin();
             }
         }
 
