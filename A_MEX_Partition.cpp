@@ -9,36 +9,37 @@ int32_t main() {
 
     int t;
     cin >> t;
-    while (t--) {
+    while(t--) {
         int n;
         cin >> n;
-        vector<int> freq(102,0);
-        for(int i=0;i<n;i++){
+        vector<int> freq(102, 0);
+        for(int i = 0; i < n; i++) {
             int x;
             cin >> x;
             freq[x]++;
         }
 
-        int first_missing = 0, second_missing = 0;
-
-        // first pass: count mex considering 0 or 1 occurrence
-        for(int i=0;i<=101;i++){
-            if(freq[i]==0){
-                first_missing = i;
+        int mex1 = 0;
+        // first pass: take one of each element
+        for(int i = 0; i <= 101; i++) {
+            if(freq[i] == 0) {
+                mex1 = i;
                 break;
-            } else {
-                freq[i]--; // take one occurrence for first multiset
+            }
+            freq[i]--; // remove one for first multiset
+        }
+
+        int mex2 = 0;
+        // second pass: take one of remaining elements
+        for(int i = 0; i <= 101; i++) {
+            if(freq[i] == 0) {
+                mex2 = i;
+                break;
             }
         }
 
-        for(int i=0;i<=101;i++){
-            if(freq[i]==0){
-                second_missing = i;
-                break;
-            }
-        }
-
-        cout << first_missing + second_missing << endl;
+        cout << mex1 + mex2 << endl;
     }
+
     return 0;
 }
