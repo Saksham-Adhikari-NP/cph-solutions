@@ -9,32 +9,37 @@ int32_t main() {
 
     int t;
     cin >> t;
-    while (t--) {
+    while(t--) {
         int n;
         cin >> n;
-        vector<int> b(n + 1);
-        for (int i = 1; i <= n; i++) {
-            cin >> b[i];
-        }
-        
-        vector<int> a(n + 1);
-        
-        for (int i = 1; i <= n; i++) {
-            int diff = b[i] - b[i - 1];
-            int required_last = i - diff;
-            
-            if (required_last == 0) {
-                // New value - use i itself
-                a[i] = i;
+        vector<long long> b(n);
+        for(int i=0;i<n;i++) cin >> b[i];
+
+        vector<int> a(n);
+        set<int> used;
+        queue<int> repeat_pool;
+        int last = 0;
+        int next_new = 1;
+
+        for(int i=0;i<n;i++){
+            int delta = b[i] - last;
+            last = b[i];
+            if(delta > 0){
+                // pick delta new numbers
+                for(int j=0;j<delta;j++){
+                    while(used.count(next_new)) next_new++;
+                    a[i] = next_new;
+                    used.insert(next_new);
+                }
             } else {
-                // Reuse value from position required_last
-                a[i] = a[required_last];
+                // pick any number already used
+                if(!used.empty()) a[i] = *used.begin();
+                else a[i] = 1;
             }
         }
-        
-        for (int i = 1; i <= n; i++) {
-            cout << a[i];
-            if (i < n) cout << " ";
+
+        for(int i=0;i<n;i++){
+            cout << a[i] << " ";
         }
         cout << endl;
     }
