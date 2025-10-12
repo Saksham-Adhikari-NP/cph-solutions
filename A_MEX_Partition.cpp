@@ -10,10 +10,28 @@ int32_t main() {
     int t;
     cin >> t;
     while (t--) {
-        // solve here
+        int n; 
+        cin >> n;
+        vector<int> a(n);
+        vector<int> cnt(101, 0);
+        for (int i = 0; i < n; i++) {
+            cin >> a[i];
+            cnt[a[i]]++;
+        }
 
+        int ans = 0;
+        for (int i = 0; i <= 100; i++) {
+            if (cnt[i] == 0) {  // missing number
+                ans = i;
+                break;
+            }
+            if (cnt[i] == 1) {  // cannot repeat in all partitions
+                ans = i;
+                break;
+            }
+        }
 
+        cout << ans << endl;
     }
-    
     return 0;
 }
