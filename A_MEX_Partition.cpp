@@ -20,23 +20,10 @@ int32_t main() {
         }
 
         int mex1 = 0;
-        // first pass: take one of each element
-        for(int i = 0; i <= 101; i++) {
-            if(freq[i] == 0) {
-                mex1 = i;
-                break;
-            }
-            freq[i]--; // remove one for first multiset
-        }
+        while(freq[mex1] > 0) mex1++;
 
         int mex2 = 0;
-        // second pass: take one of remaining elements
-        for(int i = 0; i <= 101; i++) {
-            if(freq[i] == 0) {
-                mex2 = i;
-                break;
-            }
-        }
+        while(freq[mex2] > 1) mex2++;
 
         cout << mex1 + mex2 << endl;
     }
