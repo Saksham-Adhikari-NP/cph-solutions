@@ -10,9 +10,33 @@ int32_t main() {
     int t;
     cin >> t;
     while (t--) {
-        // solve here
+        int n, k;
+        cin >> n >> k;
+        vector<int> a(n);
+        for (int i = 0; i < n; i++) cin >> a[i];
+        
+        sort(a.begin(), a.end());
+        int m = n / 2; // median 
 
+        // Binary search on the maximum  med
+        int low = a[m], high = a[m] + k + 1;
 
+        while (low < high) {
+            int mid = (low + high) / 2;
+
+            int needed = 0;
+            for (int i = m; i < n; i++) {
+                if (a[i] < mid)
+                    needed += (mid - a[i]);
+            }
+
+            if (needed <= k)
+                low = mid + 1; 
+            else
+                high = mid;   
+        }
+
+        cout << (low - 1) << endl;
     }
     
     return 0;
