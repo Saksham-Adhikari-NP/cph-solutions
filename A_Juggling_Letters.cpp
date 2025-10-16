@@ -11,6 +11,17 @@ int32_t main() {
     cin >> t;
     while (t--) {
         // solve here
+        int n; cin >> n;
+        vector<int> freq(26, 0);
+        for (int i = 0; i < n; i++) {
+            string s; cin >> s;
+            for (char c : s) freq[c - 'a']++;
+        }
+        bool ok = true;
+        for (int f : freq)
+            if (f % n != 0) ok = false;
+        cout << (ok ? "YES\n" : "NO\n");
+    }
 
 
     }
