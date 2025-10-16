@@ -18,7 +18,7 @@ int32_t main() {
         sort(a.begin(), a.end());
         int m = n / 2; // median 
 
-        // Binary search on the maximum  med
+        // Binary search on the maximum  median
         int low = a[m], high = a[m] + k + 1;
 
         while (low < high) {
@@ -32,7 +32,7 @@ int32_t main() {
             }
 
             if (needed <= k)
-                low = mid + 1; 
+                low = mid + 1; // possible, try higher
             else
                 high = mid;    // impossible, try lower
         }
