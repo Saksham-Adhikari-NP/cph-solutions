@@ -14,14 +14,14 @@ int32_t main() {
 
     sort(a.begin(), a.end());
     int m = n / 2; // median index
-    int low = a[m], high = a[m] + k + 1; // +1 for binary search boundary
+    int low = a[m], high = a[m] + k + 1; 
 
     while (low < high) {
         int mid = (low + high) / 2;
         long long need = 0;
         for (int i = m; i < n; i++) {
             if (a[i] < mid) need += mid - a[i];
-            if (need > k) break; // early stop for efficiency
+            if (need > k) break; 
         }
 
         if (need <= k) low = mid + 1;
