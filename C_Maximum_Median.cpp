@@ -24,6 +24,7 @@ int32_t main() {
         while (low < high) {
             int mid = (low + high) / 2;
 
+            // Check if we can make median >= mid
             int needed = 0;
             for (int i = m; i < n; i++) {
                 if (a[i] < mid)
@@ -33,7 +34,7 @@ int32_t main() {
             if (needed <= k)
                 low = mid + 1; 
             else
-                high = mid;   
+                high = mid;    // impossible, try lower
         }
 
         cout << (low - 1) << endl;
