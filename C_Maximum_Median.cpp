@@ -16,9 +16,9 @@ int32_t main() {
         for (int i = 0; i < n; i++) cin >> a[i];
         
         sort(a.begin(), a.end());
-        int m = n / 2; // median 
+        int m = n / 2; // median index
 
-        // Binary search on the maximum  median
+        // Binary search on the maximum possible median
         int low = a[m], high = a[m] + k + 1;
 
         while (low < high) {
