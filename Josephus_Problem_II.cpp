@@ -56,12 +56,6 @@ void solve(int N, int K)
 
         // While the current row has lesser columns, move to
         // the next row
-        while (arr[row].size() <= col) {
-            col = 0;
-            row++;
-            if (row >= arr.size())
-                row = 0;
-        }
         cout << arr[row][col] << " ";
         if (i != N - 1) {
             // Remove the student from the current row
