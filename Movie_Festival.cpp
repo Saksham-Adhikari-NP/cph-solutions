@@ -1,39 +1,42 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
-
+#include <bits/stdc++.h>
 using namespace std;
+#define int long long
+#define endl '\n'
 
-// Comparison function: returns true if movie a ends before movie b
-bool compareByEndTime(pair<int, int> a, pair<int, int> b) {
-    return a.second < b.second;
+template<typename T>
+istream& operator>>(istream& in, vector<T> &v){
+    for(auto &x : v) in >> x;
+    return in;
 }
 
-int main() {
+template<typename T>
+ostream& operator<<(ostream& out, const vector<T> &v){
+    for(auto x : v) out << x << ' ';
+    return out;
+}
+
+int32_t main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
     int n;
     cin >> n;
+    vector<pair<int,int>> movies(n);
+    for(int i = 0; i < n; i++) cin >> movies[i].first >> movies[i].second;
 
-    vector<pair<int, int>> movies;
-
-    for (int i = 0; i < n; i++) {
-        int a, b;
-        cin >> a >> b;
-        movies.push_back({a, b});
-    }
-
-    // Sort using the named comparison function
-    sort(movies.begin(), movies.end(), compareByEndTime);
+    sort(movies.begin(), movies.end(), [](auto &a, auto &b){
+        return a.second < b.second; // sort by end time
+    });
 
     int count = 0;
-    int last_end = 0;
+    int current_end = 0;
 
-    for (int i = 0; i < n; i++) {
-        if (movies[i].first >= last_end) {
+    for(auto &m : movies){
+        if(m.first >= current_end){
             count++;
-            last_end = movies[i].second;
+            current_end = m.second;
         }
     }
 
     cout << count << endl;
-    return 0;
 }
