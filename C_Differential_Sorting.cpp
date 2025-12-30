@@ -65,7 +65,7 @@ int32_t main() {
              cout << y << endl ;
              for(int i = 0 ; i < y ; i++) 
              {
-              cout << i << " " << y << " " << z << endl ;
+              cout << i+1 << " " << y+1 << " " << z+1 << endl ;
              }
 
           }
