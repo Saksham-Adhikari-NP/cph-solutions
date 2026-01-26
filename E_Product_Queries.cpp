@@ -83,21 +83,20 @@ int32_t main() {
     cin >> t;
     while (t--) {
         // solve here
-        int n;
-        cin >> n;
-        vector<int> a(n);
-        cin >> a;
+        int n;  cin >> n;
+        vector<int> a(n); cin >> a;
 
         bool hsone = false;
         vector<int> s;
+
         F0R(i, n) {
-            if (a[i] == 1) hsone = true;
-            else s.pb(a[i]);
+             s.pb(a[i]);
         }
+
         Unique(s);
 
         vector<int> dp(n + 1, INF);
-        if (hsone) dp[1] = 1;
+        
         trav(x, s) dp[x] = 1;
 
         FOR(i, 1, n + 1) {
