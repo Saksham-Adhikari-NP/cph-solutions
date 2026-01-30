@@ -82,22 +82,20 @@ void solve ()
 
     int n  , h ; cin >> n >> h ; 
     vector<int> arr(n)  ; cin >> arr ;
-    FORd(i,0,n){
+    FORd(i,0,n+1){
         vector<int> b(arr.begin() , arr.begin() + i) ;
         sort(all(b)) ; 
         int sum = 0 ; 
-        for(int i = sz(b) ; i >= 0 ; i-=2 )
+        for(int i = sz(b) -1; i >= 0 ; i-=2 )
         {
              sum += b[i] ;
-        }
+        } 
         if(sum <= h ) 
         {
             cout << i << endl ;
-            return 0  ; 
+            return  ; 
         }
-    }
-    
-    
+        }
 
 }
 
@@ -109,7 +107,6 @@ int32_t main() {
     // init_fact(); // Uncomment if nCr needed
 
     int t = 1 ;
-    cin >> t;
     while (t--) {
         solve() ; 
     }
