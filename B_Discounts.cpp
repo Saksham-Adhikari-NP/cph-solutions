@@ -71,13 +71,46 @@ ostream& operator << (ostream& s, vector<T> & v){
     s << endl;
     return s;
 }
+set<int> used;
+
+void  insertNumber(int x) {
+    auto it = used.lower_bound(x);
+
+    if (it == used.end() || *it != x) {
+        used.insert(x);
+        return ;
+    }
+
+
+    --it;
+    int y = *it + 1;
+
+    while (used.count(y)) y--;
+
+    used.insert(y);
+    return ;
+}
 
 
 void solve () 
 {
     // solve here
+    int n , k ; cin >> n >> k ; 
+    vector<int> prices(n) , voucher (k) ; 
+    cin >> prices ; 
+    cin >> voucher ; 
+
+    sort(rall(prices)) ; sort(all(voucher)) ; 
+    int ans = accumulate(all(prices), 0ll)  ,curr = 0 ; 
+
+    trav(a,voucher) {
+         curr += a ; 
+         if (curr -1 < n ) ans -= prices[curr-1] ; 
+         else break ; 
+    }
+
     
-    
+    cout << ans << endl ; 
 
 }
 
@@ -87,10 +120,10 @@ int32_t main() {
    // freopen("input.txt", "r", stdin);   // debug
 
     // init_fact(); // Uncomment if nCr needed
-
     int t;
     cin >> t;
     while (t--) {
+        used.clear() ; 
         solve() ; 
     }
 
