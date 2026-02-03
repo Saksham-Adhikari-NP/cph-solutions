@@ -77,13 +77,80 @@ void solve ()
 {
     // solve here
     int  n ; cin >> n ; 
+
+    // for odd :: max it can be = n ;;;  n is odd ::
+    /* last k ;; kl & n = n is the max possible ;;; last elem = n , n-1 ,  3rd last since it has to save 1 and use and ope   we can use 3rd elem as 1 ;; but to have k as 1 we need to make sure that the 
+    k coming here has last bit set:: since the operation rem is or we can just or it with  1ll<hpow(n) - 1 ; since this is 
+    OR kl == n-1 or 1(kl-1)  :: since n is odd its last bit is set so the sum num or 1 ; ;sets it back to n ;; 
+
+    
+     so to make  */
+     vector<int> ans(n+1)  ; 
+     unordered_map<int,int> used ; 
     if(n&1) {
-        FOR(i,1,n) cout << i << " " ; 
-        cout << endl ; 
-        return ; 
-    }    
-    else {
         
+        ans[n] = n ; ans[n-1] = n-1 ; ans[n-2] = 1 ; ans[n-3] = (1ll<< hsetbit(n) ) - 1 ; 
+        FOR(i , n-3, n+1 ) 
+        {
+            used[ans[i]] = 1 ; 
+        }
+        int x = 1 ; 
+        FOR(i,1,n-3) 
+        {
+            while(used[x])  x++ ; 
+            ans[i] = x ; 
+            used[x] = 1 ; 
+        }
+        int v = 0 ; 
+        FOR(i,1,n+1) ((i&1) ? v&=ans[i] : v|=ans[i] ) ; 
+        cout << v  << endl ; 
+        FOR(i,1,n+1) cout << ans[i] <<" " ; 
+        cout << endl ; 
+    }    
+
+    // for even we have like if its power of 2 it doesnt have any other highest bit no so we got to preserve that 
+    // if not power of 2 :: 
+    /* we can just have 2 units with last bit set so ;; last 3rd last or sets the highhest bit :: and keeps with n-1 keeps it ;: or with hpow(n) - 1 makes it the highest */
+
+    // if its a power of 2 :: let the last num be n ;  ;; then to or with it we need like hpown -1 worth nums from the and operation we are about to do in n-1 ;; 
+    // so let it be hpow(n) - 1 ;; so to make it lets say alls1 :: for the numbers before we have or:: since alls1 is odd :: we can just do alls1 - 1 or 1 here that would make future num 
+    /*  so we can go like n , n-1 ( hpow - 1 ) , n-2  , 1 , 3  */
+    else {
+        if ( n == 1ll<< hsetbit(n)) {
+            ans[n] = n ; ans[n-1] = n-1 ; ans[n-2] = n-2 ; ans[n-3] = 1 ;ans[n-4] = 3 ;
+            FOR(i,n-4,n+1) {
+                used[ans[i]] = 1 ; 
+            }
+        int x = 1 ; 
+        FOR(i,1,n-4) 
+        {
+            while(used[x])  x++ ; 
+            ans[i] = x ; 
+            used[x] = 1 ; 
+        }
+
+        }
+        else
+        {
+        ans[n] = ( (1ll<<hsetbit(n)) - 1) ; ans[n-1] = n ; ans [n-2] = n -1 ; 
+        FOR(i,n-2,n+1) {
+                used[ans[i]] = 1 ; 
+            }
+        int x = 1 ; 
+        FOR(i,1,n-2) 
+            {
+                while(used[x])  x++ ; 
+                ans[i] = x ; 
+                used[x] = 1 ; 
+            }
+        }
+        int v  = 0; 
+        FOR(i,1,n+1) ((i&1) ? v&=ans[i] : v|=ans[i] ) ; 
+        cout << v  << endl ; 
+        FOR(i,1,n+1) cout << ans[i] <<" " ; 
+        cout << endl ; 
+
+
     }
 
 }
@@ -91,7 +158,8 @@ void solve ()
 int32_t main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-   // freopen("input.txt", "r", stdin);   // debug
+    // debug
+   // freopen("input.txt", "r", stdin);   
 
     // init_fact(); // Uncomment if nCr needed
 
@@ -103,4 +171,3 @@ int32_t main() {
 
     return 0;
 }
-
