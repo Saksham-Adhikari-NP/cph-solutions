@@ -106,10 +106,7 @@ void solve ()
         int p3 = -dy, q3 = b[i].sc - ymin;
         int p4 = dy , q4 = ymax - b[i].sc;
 
-        vector<pair<int,int>> v = {
-            {p1,q1},{p2,q2},{p3,q3},{p4,q4}
-        };
-
+        vector<pair<int,int>> v = { {p1,q1},{p2,q2},{p3,q3},{p4,q4}};
         bool reject = false;
 
         trav(x,v){
@@ -121,10 +118,9 @@ void solve ()
             }
             else{
                 double t = x.sc / (double)x.f;
-                if(x.f < 0)
-                    u1 = max(u1, t);
-                else
-                    u2 = min(u2, t);
+
+                if(x.f < 0)  u1 = max(u1, t);
+                else  u2 = min(u2, t);
             }
         }
 
