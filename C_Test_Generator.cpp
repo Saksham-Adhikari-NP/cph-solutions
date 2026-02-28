@@ -75,65 +75,39 @@ ostream& operator << (ostream& s, vector<T> & v){
 inline void printYN(bool t) { cout << (t ? "YES" : "NO" ) << endl; }
 
 bool check(int n, int s, int m) {
+    // 2^2 = 2 * 2^1 ;; 
     int curr = 0;
-    // Process from MSB to LSB
     FORd(j, 0, 62) {
-        int bit_s = (s >> j) & 1;
-        // Shift current remainder and add the bit from s at this position
-        curr = (curr << 1) | bit_s;
+        int bit = (s >> j) & 1;
+        curr = curr*2 + bit; 
         
-        // If this bit is available in m, we can use it in our n numbers
         if ((m >> j) & 1) {
             curr -= n;
             if (curr < 0) curr = 0;
         }
         
-        // Safety cap: if curr exceeds a reasonable threshold, it's impossible 
-        // to reduce it to zero later. 2e18 is safe for 64-bit logic.
-        if (curr > 2e18) curr = 2e18;
+        if (curr > INF) curr = INF;
     }
     return curr == 0;
 }
 
 void solve() {
-ll s, m;
-    if (!(cin >> s >> m)) return;
+    int s, m; cin >> s >> m ; 
 
-    // We use a single pass from Most Significant Bit to Least Significant Bit
-    ll current_count = 0;
-    ll max_needed = 0;
-
-    for (int j = 62; j >= 0; j--) {
-        // 1. THE DOUBLING RULE
-        // Moving down one bit level doubles the number of pieces needed
-        // (e.g., one '8' becomes two '4's)
-        current_count *= 2;
-
-        // 2. Add the bit from 's' at this level
-        if ((s >> j) & 1) {
-            current_count++;
+    int l = 0 , r = s , ans = s ;  
+    if (lsetbit(m) > lsetbit(s)) {cout <<-1 << endl ; return ; } 
+    while ( l<= r ) 
+    {
+        int mid = l + (r-l)/2 ; 
+        if( check(mid,s,m)) 
+        {
+            r = mid - 1 ;
+            ans = mid ; 
         }
-
-        // 3. If the bit is present in 'm', we must be able to "park" 
-        // all current pieces into our 'n' elements.
-        if ((m >> j) & 1) {
-            // Your 'max needed' logic: n must be at least the current pressure
-            max_needed = max(max_needed, current_count);
-            
-            // Your 'reset' logic: Since we found a valid bit in m, 
-            // we assume these elements carry the load and we clear the pressure.
-            current_count = 0;
-        }
+        else { l = mid + 1 ; }
     }
-
-    // 4. Final Verification
-    // If current_count is not zero, it means the smallest bits of 's'
-    // could not be satisfied by the smallest bits of 'm'.
-    if (current_count > 0) {
-        cout << -1 << endl;
-    } else {
-        cout << max_needed << endl;
-    }}
+    cout << ans<< endl  ; 
+}
 int32_t main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
