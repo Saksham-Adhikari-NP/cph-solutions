@@ -87,16 +87,16 @@ void solve ()
     sort(st_end.begin(), st_end.end());
 
     int  ans = 0;
-    vector<int> seen_b;
+    vector<int> seenb;
 
     for (int i = 0; i < n; i++) {
-        int current_b = st_end[i].second;
-        auto it = upper_bound(seen_b.begin(), seen_b.end(), current_b);
-        ans += (seen_b.end() - it);
-        seen_b.insert(lower_bound(seen_b.begin(), seen_b.end(), current_b), current_b);
+        int curb = st_end[i].second;
+        auto it = upper_bound(seenb.begin(), seenb.end(), curb);
+        ans += (seenb.end() - it);
+        seenb.insert(lower_bound(seenb.begin(), seenb.end(), curb), curb);
     }
 
-    cout << ans << "\n";
+    cout << ans << endl ;
     
 
 }
