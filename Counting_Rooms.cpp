@@ -80,57 +80,47 @@ inline void printYN(bool t) { cout << (t ? "YES" : "NO" ) << endl; }
 void solve () 
 {
     // solve here
-    int height  , width  ; cin >> height >> width ; 
+int height, width; 
+cin >> height >> width;       
 
-     map<pair<int,int> , int > visited ; 
-    vector<string> st(height) ; cin >> st ; 
-    vector<vi> arr(height,vi (width)) ; 
-    FOR(i,0,height) 
-    {
-        FOR(j,0,width) 
-        {
-            if(st[i][j] == '#' ) arr[i][j] = 0 ;
-            else arr[i][j] = 1 ;  
-        }
-    }
+vector<string> st(height); 
+for(int i = 0; i < height; ++i) {
+    cin >> st[i];
+}
 
-    int ans = 0;
+// 2D vector for O(1) lookups instead of std::map
+vector<vector<bool>> visited(height, vector<bool>(width, false)); 
+int ans = 0;
 
-    FOR(i,0,height) 
-    {
-        FOR(j,0,width) 
-        { 
-            if (arr[i][j] == 1 && visited[{i, j}] == 0) 
-            {
-                ans++; 
+for(int i = 0; i < height; ++i) {
+    for(int j = 0; j < width; ++j) {
+        // Direct check on the string grid and the boolean visited matrix
+        if (st[i][j] == '.' && !visited[i][j]) {
+            ans++;                                 
+            queue<pair<int, int>> q;
+            q.push({i, j});
+            visited[i][j] = true;
+                               
+            while (!q.empty()) {
+                auto [r, c] = q.front();
+                q.pop();
                 
-                queue<pair<int, int>> q;
-                q.push({i, j});
-                visited[{i, j}] = 1;
-                
-                while (!q.empty()) 
-                {
-                    auto [r, c] = q.front();
-                    q.pop();
-                    FOR(d, 0, 4) 
-                    {
-                        int nr = r + dx[d];
-                        int nc = c + dy[d];
-                        
-                        if (nr >= 0 && nr < height && nc >= 0 && nc < width) 
-                        {
-                            if (arr[nr][nc] == 1 && visited[{nr, nc}] == 0) 
-                            {
-                                visited[{nr, nc}] = 1;
-                                q.push({nr, nc});
-                            }
+                for(int d = 0; d < 4; ++d) {
+                    int nr = r + dx[d];
+                    int nc = c + dy[d];
+                                            
+                    if (nr >= 0 && nr < height && nc >= 0 && nc < width) {
+                        if (st[nr][nc] == '.' && !visited[nr][nc]) {
+                            visited[nr][nc] = true;
+                            q.push({nr, nc});
                         }
                     }
                 }
             }
         }
     }
-    cout << ans << endl ; 
+}
+cout << ans << "\n";
 }
 
 
@@ -150,3 +140,4 @@ int32_t main() {
     return 0;
 }
 
+  
