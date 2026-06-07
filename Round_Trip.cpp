@@ -121,7 +121,7 @@ void solve ()
         visited[node] = true; 
         for(auto u : adj[node]) 
         {
-            if (u == p) continue; // Skip the edge we just came from
+            if (u == p) continue; 
 
             if(visited[u]) { 
                 pos = true; 
@@ -132,7 +132,7 @@ void solve ()
 
             parent[u] = node; 
             dfs(u, node);
-            if (pos) return; // Early exit once the cycle is found
+            if (pos) return;
         }
     };
 
