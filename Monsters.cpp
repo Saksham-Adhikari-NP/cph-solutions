@@ -83,14 +83,125 @@ using WeightedGraph = std::vector<std::vector<Edge>>;
  int dx[]={0,0,1,-1};
  int dy[]={1,-1,0,0};
  string ds="RLDU";
+using pii = pair<int, int>;
 
-
+int get_dir_idx(char c) {
+    if (c == 'R') return 0;
+    if (c == 'L') return 1;
+    if (c == 'D') return 2;
+    if (c == 'U') return 3;
+    return -1;
+}
 
 void solve () 
 {
     // solve here
+    int h, w; cin >> h >> w; 
+    vector<vi> mape(1000, vi(1000, MAXN));
+    vector<vector<char>> moves(1000, vector<char>(1000, '#'));
+    vector<vector<char>> lab(h);  
+    pair<int, int> start;
+    vector<pii> monster; 
     
+    FOR(i, 0, h) 
+    {
+        FOR(j, 0, w) 
+        {
+            char a; cin >> a; 
+            lab[i].pb(a); 
+            if(a == 'A') { start.first = i; start.second = j; }
+            else if (a == 'M') { monster.pb({i, j}); } 
+        }
+    }
+
+    queue<pair<int, int>> q;
+
+    function<void(bool)> map_closest = [&](bool hum) 
+    {
+        while(!q.empty()) 
+        {
+            auto cur = q.front();
+            q.pop();
+
+            FOR(i, 0, 4) 
+            {
+                int nx = cur.first + dx[i];
+                int ny = cur.second + dy[i];
+
+                 if(nx >= 0 && nx < h && ny >= 0 && ny < w && lab[nx][ny] != '#') 
+                {
+                    if (!hum) 
+                    { 
+                        if(mape[cur.first][cur.second] + 1 < mape[nx][ny]) 
+                        {
+                            mape[nx][ny] = mape[cur.first][cur.second] + 1;
+                            q.push({nx, ny});
+                        }
+                    }
+                    else 
+                    { 
+                        int next_dis = mape[cur.first][cur.second] + 1; 
+                        if(next_dis < mape[nx][ny] && moves[nx][ny] == '#') 
+                        {
+                            mape[nx][ny] = next_dis;
+                            moves[nx][ny] = ds[i]; 
+                            q.push({nx, ny});
+                        }
+                    }
+                }
+            }
+        }
+    };
+
+    FOR(i, 0, monster.size()) 
+    {
+        mape[monster[i].first][monster[i].second] = 0;
+        q.push({monster[i].first, monster[i].second});
+    }
+    map_closest(false); 
+
+    if (start.first == 0 || start.first == h - 1 || start.second == 0 || start.second == w - 1) {
+        cout << "YES\n0\n";
+        return;
+    }
+
+    mape[start.first][start.second] = 0; 
+    q.push({start.first, start.second});
+    map_closest(true); 
+
+    pair<int, int> escape_cell = {-1, -1};
     
+    FOR(i, 0, h) {
+        FOR(j, 0, w) {
+            if((i == 0 || i == h - 1 || j == 0 || j == w - 1) && moves[i][j] != '#') {
+                escape_cell = {i, j};
+                break;
+            }
+        }
+        if(escape_cell.first != -1) break;
+    }
+
+    if(escape_cell.first == -1) {
+        cout << "NO\n";
+    } 
+    else {
+        cout << "YES\n";
+        string path = "";
+        int cr = escape_cell.first;
+        int cc = escape_cell.second;
+
+        while(cr != start.first || cc != start.second) {
+            char move = moves[cr][cc];
+            path += move;
+            int idx = get_dir_idx(move);
+            cr -= dx[idx]; 
+            cc -= dy[idx];
+        }
+        
+        reverse(path.begin(), path.end());
+        cout << path.size() << endl ;
+        cout << path << endl ; 
+    }
 
 }
 
@@ -101,12 +212,7 @@ int32_t main() {
 
     // init_fact(); // Uncomment if nCr needed
 
-    int t;
-    cin >> t;
-    while (t--) {
-        solve() ; 
-    }
-
+solve() ; 
     return 0;
 }
 
