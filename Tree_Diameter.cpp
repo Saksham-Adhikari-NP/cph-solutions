@@ -101,43 +101,40 @@ using pii = pair<int, int>;
 
 
 
+const int N = 200001;
+vector<int> g[N];
+int dist[N];
+int diameter = 0;
 
-void solve () 
-{
-    // solve here
-    int n ; cin >> n ; 
-    int lp = n-1 ; 
-    Graph adj(n+1) ; 
-    while(lp--) 
-    {
-        int x,y ; cin >> x >> y ; 
-        adj[x].pb(y) ; 
-        adj[y].pb(x) ; 
-    }
-    priority_queue<pii> distance_nodes ,dn_second ; // distance , node
-    map<int,int> dist ; 
-    function<void(int,int,int)> dfs = [&] (int node , int distance,int parent) 
-    {
-        dist[node] = distance ; 
-        for( auto s: adj[node]) 
-        {
-            if( s == parent ) continue;
-            dist[s]  = dist[node] + 1 ; 
-            distance_nodes.push({dist[s] , s}) ; 
-            dfs(s,dist[s] , node);
+void dfs(int node, int parent) {
+    int max_distance = 0;
+    for (int child : g[node]) {
+        if (child != parent) {
+            dfs(child, node);
+            diameter = max(diameter, max_distance + dist[child] + 1);
+            max_distance = max(max_distance, dist[child] + 1);
         }
-    };
-    dfs(1,0,0) ; 
-    // farthest node 
-    int farthest = distance_nodes.top().second ; 
-    while (!distance_nodes.empty()) {
-    distance_nodes.pop();
+    }
+    dist[node] = max_distance;
+}
+
+void solve(){
+    int n;
+    cin >> n;
+
+    for (int i = 0; i < n - 1; ++i) {
+        int a, b;
+        cin >> a >> b;
+        g[a].push_back(b);
+        g[b].push_back(a);
     }
 
-    dfs(farthest , 0, 0) ; int ans = 0 ;
-    if(!distance_nodes.empty() )  { ans = distance_nodes.top().first ; }
-    cout << ans << endl ; 
-} 
+    dfs(1, 1);
+
+    cout << diameter << '\n';
+}
+
+
 
 int32_t main() {
     ios::sync_with_stdio(false);
