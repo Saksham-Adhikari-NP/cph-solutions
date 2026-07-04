@@ -19,7 +19,7 @@ tree_order_statistics_node_update> indexed_set;
 #define Max(x) (*max_element(all(x)))
 #define Min(x) (*min_element(all(x)))
 #define Sum(x) (accumulate(all(x), 0LL))
-#define sz(x) ((int)x.size())
+#define siz(x) ((int)x.size())
 #define Unique(x) sort(all(x)); (x).erase(unique(all(x)),x.end())
 
 // bitmanip shortcuts 
@@ -105,8 +105,62 @@ using pii = pair<int, int>;
 void solve () 
 {
     // solve here
-    
-    
+    int n;
+    cin >> n;
+
+    Graph adj(n + 1);
+
+    for (int i = 0; i < n - 1; i++)
+    {
+        int a, b;
+        cin >> a >> b;
+        adj[a].pb(b);
+        adj[b].pb(a);
+    }
+
+    vector<int> sz(n + 1, 0);
+    vector<int> dp(n + 1, 0);
+    vector<int> ans(n + 1, 0);
+
+    function<void(int, int)> dfs1 = [&](int u, int p)
+    {
+        sz[u] = 1;
+
+        for (auto v : adj[u])
+        {
+            if (v == p) continue;
+
+            dfs1(v, u);
+
+            sz[u] += sz[v];
+            dp[u] += dp[v] + sz[v];
+        }
+    };
+
+    function<void(int, int)> dfs2 = [&](int u, int p)
+    {
+        for (auto v : adj[u])
+        {
+            if (v == p) continue;
+
+            ans[v] = ans[u] + (n - 2 * sz[v]);
+
+            dfs2(v, u);
+        }
+    };
+
+    dfs1(1, 0);
+
+    ans[1] = dp[1];
+
+    dfs2(1, 0);
+
+    for (int i = 1; i <= n; i++)
+    {
+        cout << ans[i] << " ";
+    }
+    cout << "\n";
+
 
 }
 
@@ -116,13 +170,7 @@ int32_t main() {
    // freopen("input.txt", "r", stdin);   // debug
 
     // init_fact(); // Uncomment if nCr needed
-
-    int t;
-    cin >> t;
-    while (t--) {
-        solve() ; 
-    }
-
+solve() ; 
     return 0;
 }
 
