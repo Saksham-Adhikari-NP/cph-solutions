@@ -132,9 +132,9 @@ void solve ()
 
     int need = n - i;
     int  saved =  min({maxunused - 1, m}); 
-    long long ans = need * 1LL * m - saved;
+    int ans = need* m - saved;
 
-    cout << ans << '\n';
+    cout << ans << endl;
 }
 
 int32_t main() {
