@@ -1,3 +1,5 @@
+
+
 #include <bits/stdc++.h>
 using namespace std;
 #define ll long long
@@ -100,14 +102,105 @@ int get_dir_idx(char c) {
 using pii = pair<int, int>;
 
 
-
+int up[MAXN][31] ; 
 
 void solve () 
 {
     // solve here
-    
-    
+    int n , q ;cin >> n >> q ; 
+    Graph adj(n+1) ; 
+    FOR(i,0,n-1) 
+    {
+        int a , b ; cin >> a >> b ; 
+        adj[a].pb(b) ; 
+        adj[b].pb(a) ; 
+    }
+    // level_assign / root tree in x / 1st ancestor ;; 
+    vi level(n+1,0) ; 
+    auto dfs =[&](auto && self , int node , int parent, int curr_level) -> void
+    {
+        level[node] = curr_level ; 
+        for(auto s: adj[node]) 
+            {
+                if(s == parent) continue;  
+                up[s][0] = node ; 
+                self(self, s,node,curr_level+1) ; 
+            }
+    };
+    dfs(dfs,1,-1,0); 
 
+    FOR(k,1,30) 
+    {
+        FOR(node,1,n+1) 
+        {
+            if(up[node][k-1] != -1)
+            {
+                up[node][k] = up[ up[node][k-1] ][k-1] ; 
+            }
+        }
+    }
+
+    auto kth_ancestor =[&](int node , int k) -> int 
+    {
+        FOR(bit,0,30) 
+        {
+            if (node!= -1) 
+            { 
+                if((1ll << bit) & k)
+                    {
+                        node = up[node][bit] ; 
+                    } 
+            }   
+        }
+        return node ; 
+    };
+
+    auto lca = [&] (int a , int b ) -> int 
+    {
+        if(level[a] < level[b]) swap(a, b) ; 
+        int diff = level[a]-level[b] ; 
+        a = kth_ancestor(a,diff) ; 
+        if (a == b) return a ; 
+        for(int i = 29 ; i>= 0 ; i--)  
+        {
+            if(up[a][i] != -1 && up[a][i] != up[b][i]) 
+            {
+                a = up[a][i] ; 
+                b = up[b][i] ; 
+            }
+        }
+        a = up[a][0] ; 
+        return a ; 
+    };
+
+    vi diff(n+1,0) ;
+    while(q--) 
+    {
+        int a, b ; cin >> a >> b ; 
+        diff[a] ++ ; diff[b] ++ ; 
+        int cmmn_ans_node = lca(a,b) ;
+        diff[cmmn_ans_node] -= 1 ;  
+        int parent_cmmn = up[cmmn_ans_node][0] ; 
+        if(parent_cmmn != -1) 
+        {
+            diff[parent_cmmn] -= 1 ; 
+        }
+    }
+
+    auto sum =[&](auto &&self, int node , int parent ) ->  void 
+    {
+        trav(s,adj[node]) 
+        {
+            if (s == parent) continue; 
+            self(self,s , node) ; 
+            diff[node] += diff[s] ; 
+        }
+    };
+    sum(sum,1,-1) ; 
+    FOR(i,1,n+1) 
+    {
+    cout << diff[i] << " \n"[i == n];
+    }
 }
 
 int32_t main() {
@@ -116,13 +209,8 @@ int32_t main() {
    // freopen("input.txt", "r", stdin);   // debug
 
     // init_fact(); // Uncomment if nCr needed
-
-    int t;
-    cin >> t;
-    while (t--) {
-        solve() ; 
-    }
-
+    memset(up, -1, sizeof(up)) ; 
+    solve(); 
     return 0;
 }
 
