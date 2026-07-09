@@ -127,6 +127,7 @@ void solve ()
     int m = freq.size();
 
     for(int i = m - 1; i >= 0; )
+    
     {
         int x = freq[i];
 
@@ -148,7 +149,6 @@ void solve ()
         int aim = k ; 
         
         aim -= diff ; 
-// Added aim >= 0 to ensure we don't delete elements past a frequency of 0
         if(aim >= 0 && aim % occurrence[freq[i]] == 0) ans ++ ;        n -= (exact[freq[i]] * freq[i])  ;
     }
     cout << ans << endl ; 
