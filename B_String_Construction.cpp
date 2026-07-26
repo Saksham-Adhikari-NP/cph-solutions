@@ -1,114 +1,151 @@
-#include <bits/stdc++.h>
-using namespace std;
-#define ll long long
+#include <iostream>
+#include <vector>
+#include <algorithm>
 
-//ordered set; 
-#include <ext/pb_ds/assoc_container.hpp>
-using namespace __gnu_pbds;
-typedef tree<int,null_type,less<int>,rb_tree_tag,
-tree_order_statistics_node_update> indexed_set;
+using namespace std ;
 
-#define int long long
-#define vi vector<int>  
-#define all(a) (a).begin(), (a).end() 
-#define rall(a) (a).rbegin(), (a).rend()
-#define Max(x) (*max_element(all(x)))
-#define Min(x) (*min_element(all(x)))
-#define sz(x) ((int)x.size())
-#define Unique(x) sort(all(x)); (x).erase(unique(all(x)),x.end())
+using ll = long long ;
+using vi = vector<int> ;
 
-// bitmanip shortcuts 
-int hsetbit (int a ) { return (63 - __builtin_clzll(a)) ; } 
-int lsetbit (int n ) { return (n & -n) ; }
-int setbit (int n) { return __builtin_popcountll(n); } 
+const int MOD = 998244353 ;
 
+ll count_ways ( int m , int n , const vi &a ) 
+{
+    // 1. Left side must be non-decreasing, right side must be non-increasing
+    for ( int i = 1 ; i < m - 1 ; i++ ) 
+    {
+        if ( a[i] > a[i+1] ) return 0 ; 
+    }
+    for ( int i = m ; i < n - 1 ; i++ ) 
+    {
+        if ( a[i] < a[i+1] ) return 0 ; 
+    }
 
-#define FOR(i, a, b) for (int i=a; i<(b); i++)
+    vi forced ; 
+    vi free_bounds ; 
 
-const int MAXN = 2e5+5;
-const int INF = 1e18;
-const int MOD = 1e9+7; 
+    // Max element n sits at index m
+    forced.push_back(n) ; 
 
+    // Left side: first occurrence forces prefix max
+    for ( int i = 1 ; i <= m - 1 ; i++ ) 
+    {
+        if ( i == 1 || a[i] > a[i-1] ) 
+        {
+            forced.push_back(a[i]) ; 
+        } 
+        else 
+        {
+            free_bounds.push_back(a[i]) ; 
+        }
+    }
 
-// vector io
-template<typename T>
-istream& operator >> (istream& s, vector<T>& v){ for(auto &x: v) s >> x; return s; }
-template<typename T>
-ostream& operator << (ostream& s, const vector<T>& v){ for(auto &x: v) s << x << ' '; return s; }
+    // Right side: last occurrence forces suffix max
+    for ( int i = m ; i <= n - 1 ; i++ ) 
+    {
+        if ( i == n - 1 || a[i] > a[i+1] ) 
+        {
+            forced.push_back(a[i]) ; 
+        } 
+        else 
+        {
+            free_bounds.push_back(a[i]) ; 
+        }
+    }
 
-inline void printYN(bool t) { cout << (t ? "YES" : "NO" ) << endl; }
+    // 2. Check for duplicate forced elements
+    sort(forced.begin() , forced.end()) ; 
+    for ( int i = 0 ; i < (int)forced.size() - 1 ; i++ ) 
+    {
+        if ( forced[i] == forced[i+1] ) return 0 ; 
+    }
 
-struct Edge {
-    int to;
-    long long weight;
-};
+    // 3. Find remaining elements set = {1..n} \ forced
+    vi rem ; 
+    int f_idx = 0 ; 
+    for ( int val = 1 ; val <= n ; val++ ) 
+    {
+        if ( f_idx < (int)forced.size() && forced[f_idx] == val ) 
+        {
+            f_idx++ ; 
+        } 
+        else 
+        {
+            rem.push_back(val) ; 
+        }
+    }
 
-using Graph = std::vector<std::vector<int>>;
-using WeightedGraph = std::vector<std::vector<Edge>>;
+    // 4. Fill free positions with suitable elements <= bound
+    sort(free_bounds.begin() , free_bounds.end()) ; 
 
- int dx[]={0,0,1,-1};
- int dy[]={1,-1,0,0};
- string ds="RLDU";
-int get_dir_idx(char c) {
-    if (c == 'R') return 0;
-    if (c == 'L') return 1;
-    if (c == 'D') return 2;
-    if (c == 'U') return 3;
-    return -1;
+    ll ways = 1 ; 
+    int ptr = 0 ; 
+    for ( int i = 0 ; i < (int)free_bounds.size() ; i++ ) 
+    {
+        while ( ptr < (int)rem.size() && rem[ptr] <= free_bounds[i] ) 
+        {
+            ptr++ ; 
+        }
+        int available = ptr - i ; 
+        if ( available <= 0 ) return 0 ; 
+        ways = (ways * available) % MOD ; 
+    }
+
+    return ways ; 
 }
-
-using pii = pair<int, int>;
 
 void solve () 
 {
-    // solve here
-    int n , k ; 
-    cin >> n >> k ; 
-    int need1 , need0; 
-    if(k&1) 
-    {
-         need1 = k/2 + 1  ; 
-         need0 = k/2 + 1 + 1 ; 
-                 
-    }
-    else 
-    {
-        need1 = k/2+1 ; 
-        need0 = k/2 +1 ; 
-        
-    }
-    
-    if(need1 + need0 > n) {
-    cout << - 1 << endl ; 
-    return ; 
-    }   
+    int n ; 
+    cin >> n ; 
 
-    vi s ; 
-    for(int i = 0 ; i<need1 ; i++) s.push_back(1) ; 
-    for(int i = 0 ; i<need0 ; i++) s.push_back(0) ; 
-    int num = 1 ; 
-    for(int i = need1+need0 ; i<n ; i++) 
+    vi a(n) ; 
+    int mx = 0 ; 
+    for ( int i = 1 ; i <= n - 1 ; i++ ) 
     {
-        s.push_back(num) ; 
-        num = abs( num - 1) ; 
+        cin >> a[i] ; 
+        mx = max(mx , a[i]) ; 
     }
-    for(int i = 0 ; i<n ; i++) cout <<s[i] ; 
-    cout << endl ; 
+
+    if ( mx >= n ) 
+    {
+        cout << 0 << endl ; 
+        return ; 
+    }
+
+    // Find the peak range (L to R)
+    int L = -1 , R = -1 ; 
+    for ( int i = 1 ; i <= n - 1 ; i++ ) 
+    {
+        if ( a[i] == mx ) 
+        {
+            if ( L == -1 ) L = i ; 
+            R = i ; 
+        }
+    }
+
+    // Candidate max index positions m1 and m2
+    int m1 = L ; 
+    int m2 = R + 1 ; 
+
+    ll ans = count_ways(m1 , n , a) ; 
+    if ( m1 != m2 ) 
+    {
+        ans = (ans + count_ways(m2 , n , a)) % MOD ; 
+    }
+
+    cout << ans << endl ; 
 }
 
-int32_t main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-   // freopen("input.txt", "r", stdin);   // debug
+int main () 
+{
+    ios_base::sync_with_stdio(false) ; 
+    cin.tie(NULL) ; 
 
-    // init_fact(); // Uncomment if nCr needed
-
-    int t;
-    cin >> t;
-    while (t--) {
-        solve() ; 
+    int t ; 
+    if ( cin >> t ) 
+    {
+        while ( t-- ) solve() ; 
     }
-
-    return 0;
+    return 0 ; 
 }
-
