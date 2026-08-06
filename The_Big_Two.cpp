@@ -71,12 +71,12 @@ void solve ()
 
     int a1 = a[0], b1 = b[0];
 
-    auto count_valid = [&](int fixed_val, int avoid_val) {
+    auto cnt = [&](int fixed_val, int   avoid_val) {
         int fail_count = 0;
         vi freq(n + 1, 0);
         
         for (int i = 0; i < m; i++) {
-            if (a[i] != fixed_val && b[i] != fixed_val) {
+            if (a[i] != fixed_val && b[i] !=fixed_val) {
                 fail_count++;
                 freq[a[i]]++;
                 freq[b[i]]++;
@@ -87,18 +87,15 @@ void solve ()
 
         int valid_y = 0;
         for (int i = 1; i <= n; i++) {
-            if (i != fixed_val && i != avoid_val && freq[i] == fail_count) {
+            if (i != fixed_val&& i != avoid_val && freq[i] == fail_count) {
                 valid_y++;
             }
         }
         return valid_y;
     };
 
-    // 1. Pairs containing a1 but not b1
-    // 2. Pairs containing b1 but not a1
-    int ans = count_valid(a1, b1) + count_valid(b1, a1);
+    int ans = cnt(a1,b1) + cnt(b1, a1);
 
-    // 3. The pair (a1, b1) itself
     bool both_valid = true;
     for(int i = 0; i < m; i++) {
         if(a[i] != a1 && b[i] != a1 && a[i] != b1 && b[i] != b1) {
