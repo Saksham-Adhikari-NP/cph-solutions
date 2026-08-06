@@ -63,15 +63,26 @@ void solve ()
 {
     // solve here
     int first0 = -1 , first1=-1  ; 
+    int n ; 
+    cin >> n ; 
     string s ; 
     cin >> s ; 
-    int n = s.size() ; 
+    FOR(i,1,n)
+    {
+        if (s[i] == '0' && first0 < 0) first0 = i ; 
+        if (s[i] == '1' && first1 < 0) first1 = i ; 
 
-    s.erase(s.find('1'), 1);
-    s.erase(s.find('0'), 1);
-    cout << s << endl ; 
 
+    } 
+    vector<char>  ans ; 
+    FOR(i,0,n) 
+    {
+        if( i== first0 || i == first1) continue; 
+        else ans.push_back(s[i]) ; 
     }
+    for(int i = 0 ; i<n-2 ; i++ ) cout <<ans[i] ;
+    cout << endl ;
+}
 
 int32_t main() {
     ios::sync_with_stdio(false);
