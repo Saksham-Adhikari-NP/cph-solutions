@@ -63,70 +63,36 @@ void solve ()
 {
     int n , m ; 
     cin >> n >> m ; 
-    vi cnt(m+1 , 0) ; 
-    for(int i = 0 ; i < n ; i++){
-        int a ; cin >> a ; 
-        cnt[a]++ ; 
-    }
+    vi arr(n) ; cin >> arr ; 
 
-    // pref[i] = carrots  <= i
-    vi pref(m+1 , 0) ; 
-    for(int i = 1 ; i<= m ; i++) pref[i] = pref[i-1] + cnt[i] ; 
-    pref[0] = cnt[0] ; 
+    vi cnt(m+2 , 0) ;
+    
+    int sum = accumulate(all(arr),0ll) ; 
 
-    // sumFloor[L] = sum floor(a / L)
-    vi sumFloor(m+2 , 0) ; 
-    for(int L = 1 ; L<= m ; L++){
-        int total = 0 ; 
-        for(int q = 1 , lo = L ; lo <= m ; q++ , lo += L){
-            int hi = min(lo + L -1 , m) ; 
-            int c = pref[hi] - (lo-1 >=0 ? pref[lo-1] : 0) ; 
-            total += q * c ; 
-        }
-        sumFloor[L] = total ; 
-    }
+    for(auto x: arr) cnt[x]++  ; 
+    for(int i = m ; i>= 1 ; i--) cnt[i-1] += cnt[i] ; 
 
-    // suffix max of sumFloor
-    vi sufMax(m+3 , 0) ; 
-    for(int i = m ; i>= 1 ; i--) sufMax[i] = max(sufMax[i+1] , sumFloor[i]) ; 
+    for(int k = 1 ; k<= m ; k++) {
 
-    int totalSum = sumFloor[1] ; // sum a_i
-    vi ans(m+1 , 0) ; 
+        int ans = 0 ;
+        if (k> 30 || (1LL << k) >= m) ans = sum ; 
 
-    int K0 = hsetbit(m); 
-    // while((1LL<< (K0+1)) <= 2*m) K0++ ; 
+        else {
+            for(int x = 1 ; x<= (m/(1ll<<k))  ; x++) {
+                int curr = 0 ; 
+                for(int j = 1 ; x*j <= m && j<(1ll<< k) ; j++) {
+                    curr += cnt[x*j] ; 
+                }
 
-    for(int k = 1 ; k<= K0 ; k++){
-        int pow2 = 1LL<<k ; 
-        int thr = m / pow2 ; //  thr ->  completely contributes if less than this ;; 
-        int best = 0 ; 
+                if(x * (1ll << k ) <= m ) curr += cnt[x*(1ll<<k)] - cnt[x*(1ll<<k) + 1] ;
+                ans = max(ans , curr) ; 
 
-        // candidateB : L <= thr
-        for(int L = 1 ; L<= thr ; L++){
-            int X = L * pow2 ; 
-            // sum_small = sum_{a <= X} floor(a / L)
-            int sum_small = 0 ; 
-            for(int q = 1 ; q<= pow2 ; q++){
-                int lo = q * L ; 
-                int hi = lo + L-1  ; 
-                if(hi > X) hi = X ; 
-                if(lo > X) break ; 
-                int c = pref[hi] - (lo-1 >=0 ? pref[lo-1] : 0) ; 
-                sum_small += q * c ; 
             }
-            int cnt_big = n - pref[X] ; 
-            int cur = sum_small + cnt_big * (pow2 - 1) ; 
-            if(cur > best) best = cur ; 
-        }
-        ans[k] = best ; 
-    }
-    for(int k = K0+1 ; k<= m ; k++) ans[k] = totalSum ; 
 
-    for(int k = 1 ; k<= m ; k++){
-        if(k>1) cout << ' ' ; 
-        cout << ans[k] ; 
+        }
+        cout << ans << " " ; 
     }
-    cout << '\n' ; 
+    cout << endl ; 
 }
 
 int32_t main() {
