@@ -66,45 +66,24 @@ void solve ()
     cin >> n >> k ; 
     vector<int> arr(n+1) ;for (int i = 1 ; i<n+1 ; i++)  cin >> arr[i] ;
     vector<vector<vi>> dp(n+2,vector<vi>(k+1,vi(2,-INF))) ; 
-    dp[0][1][0]  = 0 ;
-    dp[0][1][1]  = 0 ;
+    
 
-    for(int i = 1 ; i<n+1 ; i++) {
+    dp[1][1][1] = arr[1]  ; 
+    for(int i = 2 ; i<n+1 ; i++) {
         
-        dp[i][1][0] =  max(dp[i-1][1][0] , arr[i]) ; 
-        dp[i][1][1] =  max(dp[i-1][1][1] , arr[i]) ; 
+        dp[i][1][1] =   arr[i] ; 
+        dp[i][1][0] =  max(dp[i-1][1][1] , dp[i-1][1][0]);
 
     }
     
-    // for(int i = 1 ; i<n+1 ; i++ ) {
-    //     for(int cnt = 2 ; cnt <= min(i/2+1 ,k) ; cnt++) {
-    //         if((i+1)/2  == cnt) {
-    //             dp[i+1][cnt] = dp[i-1][cnt-1] + arr[i] ;
-    //         }
+    for(int i = 3; i<n+1 ; i++) {
+        for(int cnt = 2 ; cnt <= (min((i+1)/2, k)) ; cnt++) {
 
-    //         else if(i-2>=(cnt-1)*2) { 
-    //             dp[i+1][cnt] = max(dp[i][cnt], dp[i-1][cnt-1] + arr[i]);
-    //         }
-        
-    //     }
-    // };;;;
-
-    for(int i = 3 ; i<n+1 ; i++) {
-        for(int cnt = 2 ; cnt <= (min(i/2+1 , k)) ; cnt++) {
-
-            if((i+1)/2 <= cnt) {
-            dp[i][cnt][1] = (dp[i-2][cnt-1][1] )+ arr[i] ;  ; 
-            if(i> 2*cnt -1 ) dp[i][cnt][0] = (dp[i-1][cnt][1]);
+            if (dp[i-1][cnt-1][0] != -INF) {
+                dp[i][cnt][1] = dp[i-1][cnt-1][0] + arr[i];
             }
-            else { 
-        //     TAKE ; 
-        //    dp[i][cnt][1]  = dp[i-2][cnt-1] ;  + arr[i] ; 
-            dp[i][cnt][1] = max(dp[i-2][cnt-1][1] , dp[i-2][cnt-1][0]) + arr[i] ;  ; 
-
-            //leave ; 
-           // dp[i][cnt] = dp[i-1][cnt] ; 
             dp[i][cnt][0] = max(dp[i-1][cnt][0] , dp[i-1][cnt][1]) ; 
-            }
+           // }
         }
     }
 
