@@ -62,52 +62,56 @@ using pii = pair<int, int>;
 void solve () 
 {
     // solve here
-    ll n , m ; 
-    cin >> n >> m ; 
-    vi arr(n+1) ; 
-    for(int i = 1 ; i<n+1 ; i++) cin >>arr[i] ; 
-    Graph adj(n+1) ; 
-    int u,v ; 
-    while(m--) {
-        cin >> u >> v ; 
-        adj[u].push_back(v) ; 
-        adj[v].push_back(u) ;  
-    }
-
-    vi visited(MAXN,0) ;
-    vi cst ;  
-    int branchmin;
-    auto dfs =[&](auto &&self ,int node , int parent)->void {
-        
-        visited[node] = 1 ; 
-        for(auto child : adj[node]) {
-            if(child != parent) { 
-                if(!visited[child]){
-                    visited[child] = 1 ; 
-                    branchmin = min(branchmin,arr[child]) ; 
-                    self(self,child,node) ; 
-                }
-            }
-        }
-        
-    } ; 
+    int  n , k ; 
+    cin >> n >> k ; 
+    vector<int> arr(n+1) ;for (int i = 1 ; i<n+1 ; i++)  cin >> arr[i] ;
+    vector<vector<vi>> dp(n+2,vector<vi>(k+1,vi(2,-INF))) ; 
+    dp[0][1][0]  = 0 ;
+    dp[0][1][1]  = 0 ;
 
     for(int i = 1 ; i<n+1 ; i++) {
-        if(!visited[i] )  {
-             branchmin = arr[i] ; 
-             dfs(dfs,i,-1) ; 
-             cst.push_back(branchmin) ;  
+        
+        dp[i][1][0] =  max(dp[i-1][1][0] , arr[i]) ; 
+        dp[i][1][1] =  max(dp[i-1][1][1] , arr[i]) ; 
+
+    }
+    
+    // for(int i = 1 ; i<n+1 ; i++ ) {
+    //     for(int cnt = 2 ; cnt <= min(i/2+1 ,k) ; cnt++) {
+    //         if((i+1)/2  == cnt) {
+    //             dp[i+1][cnt] = dp[i-1][cnt-1] + arr[i] ;
+    //         }
+
+    //         else if(i-2>=(cnt-1)*2) { 
+    //             dp[i+1][cnt] = max(dp[i][cnt], dp[i-1][cnt-1] + arr[i]);
+    //         }
+        
+    //     }
+    // };;;;
+
+    for(int i = 3 ; i<n+1 ; i++) {
+        for(int cnt = 2 ; cnt <= (min(i/2+1 , k)) ; cnt++) {
+
+            if((i+1)/2 <= cnt) {
+            dp[i][cnt][1] = (dp[i-2][cnt-1][1] )+ arr[i] ;  ; 
+            if(i> 2*cnt -1 ) dp[i][cnt][0] = (dp[i-1][cnt][1]);
+            }
+            else { 
+        //     TAKE ; 
+        //    dp[i][cnt][1]  = dp[i-2][cnt-1] ;  + arr[i] ; 
+            dp[i][cnt][1] = max(dp[i-2][cnt-1][1] , dp[i-2][cnt-1][0]) + arr[i] ;  ; 
+
+            //leave ; 
+           // dp[i][cnt] = dp[i-1][cnt] ; 
+            dp[i][cnt][0] = max(dp[i-1][cnt][0] , dp[i-1][cnt][1]) ; 
+            }
         }
     }
 
-    sort(all(cst)) ; 
-    int sze = sz(cst) ; 
-    int ans = cst[0]*(sze-1) ; 
-    for(int i = 1 ; i<sze ; i++) {
-        ans += cst[i] ; 
-    }
-    cout << ans <<endl ; 
+    int ans ; 
+     ans = max(dp[n][k][0] , dp[n][k][1]) ; 
 
+    cout << ans <<endl ; 
 }
 
 
